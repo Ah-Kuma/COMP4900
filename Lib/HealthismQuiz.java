@@ -46,4 +46,9 @@ public class HealthismQuiz {
         }
         return QuizQuestions.get(index);
     }
+    
+    public HealthismQuiz()
+    {
+        QuizQuestions = new ArrayList<Question>();
+    }
 }

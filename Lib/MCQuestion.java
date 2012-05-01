@@ -14,7 +14,6 @@ public class MCQuestion
     extends Question
 {
     private ArrayList<String> optionSelectionText;
-    
     public static final int QuestionTypeID = 0;
 
     @Override
@@ -22,7 +21,7 @@ public class MCQuestion
     {
         return optionSelectionText.iterator();
     }
-    
+
     @Override
     public int getQuestionTypeID()
     {
@@ -39,6 +38,8 @@ public class MCQuestion
     {
         super(questionText);
 
+        optionSelectionText = new ArrayList<String>();
+        
         Scanner scanner = new Scanner(options);
         while(scanner.hasNext())
         {

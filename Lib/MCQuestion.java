@@ -14,6 +14,8 @@ public class MCQuestion
     extends Question
 {
     private ArrayList<String> optionSelectionText;
+    
+    public static final int QuestionTypeID = 0;
 
     @Override
     public Iterator<String> getQuestionOptions()

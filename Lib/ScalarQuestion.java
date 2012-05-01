@@ -1,7 +1,8 @@
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
-import org.w3c.dom.ranges.Range;
 
 
 /*
@@ -15,6 +16,15 @@ import org.w3c.dom.ranges.Range;
 public class ScalarQuestion
     extends Question
 {
+    
+    private static final int QuestionTypeID = 1;
+    
+    @Override
+    public int getQuestionTypeID()
+    {
+        return QuestionTypeID;
+    }
+    
     private int MinScaleValue;
     
     public int getMinScaleValue()
@@ -27,6 +37,16 @@ public class ScalarQuestion
     public int getMaxScaleValue()
     {
         return MaxScaleValue;
+    }
+    
+    @Override
+    public Iterator<String> getQuestionOptions()
+    {
+        ArrayList<String> options = new ArrayList<String>(2);
+        options.add(String.valueOf(MinScaleValue));
+        options.add(String.valueOf(MaxScaleValue));
+        
+        return options.iterator();
     }
     
     public ScalarQuestion(String scalarValues,

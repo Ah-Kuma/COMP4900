@@ -1,7 +1,7 @@
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 /*
@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class HealthismQuiz {
 
-    private List<Question> QuizQuestions;
+    private ArrayList<Question> QuizQuestions;
     
     public void addQuestion(Question question)
     {
@@ -31,4 +31,12 @@ public class HealthismQuiz {
         return QuizQuestions.iterator();
     }
     
+    public Question getQuestion(int index)
+    {
+        if(index > QuizQuestions.size())
+        {
+            return QuizQuestions.get(index);
+        }
+        return QuizQuestions.get(QuizQuestions.size() - 1);
+    }
 }

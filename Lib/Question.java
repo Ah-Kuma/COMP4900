@@ -20,7 +20,7 @@ public abstract class Question
         this.QuestionText = text;
     }
     
-    public Question(String questionText)
+    protected Question(String questionText)
     {
         this.QuestionText = questionText;
     }

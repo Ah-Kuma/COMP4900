@@ -1,3 +1,8 @@
+
+
+import java.util.Iterator;
+
+
 /**
  * Question.Java
  * 
@@ -24,5 +29,7 @@ public abstract class Question
     {
         this.QuestionText = questionText;
     }
+    
+    public abstract Iterator<String> getQuestionOptions();
     
 }

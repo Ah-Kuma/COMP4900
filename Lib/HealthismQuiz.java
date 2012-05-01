@@ -33,10 +33,17 @@ public class HealthismQuiz {
     
     public Question getQuestion(int index)
     {
+        //boundary testing
         if(index > QuizQuestions.size())
         {
-            return QuizQuestions.get(index);
+            //returns the beginning of the list if the index is greater than the size of the list
+            return QuizQuestions.get(QuizQuestions.size() - 1);
         }
-        return QuizQuestions.get(QuizQuestions.size() - 1);
+        else if(index < 0)
+        {
+            //returns the start of the list if the index is greater 
+            return QuizQuestions.get(0);
+        }
+        return QuizQuestions.get(index);
     }
 }

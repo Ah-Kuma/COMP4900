@@ -15,7 +15,8 @@ public class MCQuestion
 {
     private ArrayList<String> optionSelectionText;
 
-    public Iterator<String> getOptionSelectionText()
+    @Override
+    public Iterator<String> getQuestionOptions()
     {
         return optionSelectionText.iterator();
     }

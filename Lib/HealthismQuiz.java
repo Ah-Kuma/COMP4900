@@ -16,39 +16,39 @@ import java.util.Iterator;
  */
 public class HealthismQuiz {
 
-    private ArrayList<Question> QuizQuestions;
+    private ArrayList<Question> quizQuestions;
     
     public void addQuestion(Question question)
     {
         if(question != null)
         {
-            QuizQuestions.add(question);
+            quizQuestions.add(question);
         }
     }
     
     public Iterator<Question> getQuestions()
     {
-        return QuizQuestions.iterator();
+        return quizQuestions.iterator();
     }
     
     public Question getQuestion(int index)
     {
         //boundary testing
-        if(index > QuizQuestions.size())
+        if(index > quizQuestions.size())
         {
             //returns the beginning of the list if the index is greater than the size of the list
-            return QuizQuestions.get(QuizQuestions.size() - 1);
+            return quizQuestions.get(quizQuestions.size() - 1);
         }
         else if(index < 0)
         {
             //returns the start of the list if the index is greater 
-            return QuizQuestions.get(0);
+            return quizQuestions.get(0);
         }
-        return QuizQuestions.get(index);
+        return quizQuestions.get(index);
     }
     
     public HealthismQuiz()
     {
-        QuizQuestions = new ArrayList<Question>();
+        quizQuestions = new ArrayList<Question>();
     }
 }

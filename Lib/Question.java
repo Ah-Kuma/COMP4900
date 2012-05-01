@@ -31,5 +31,6 @@ public abstract class Question
     }
     
     public abstract Iterator<String> getQuestionOptions();
+    public abstract int getQuestionTypeID();
     
 }

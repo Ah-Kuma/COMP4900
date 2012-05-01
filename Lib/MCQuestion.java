@@ -22,6 +22,12 @@ public class MCQuestion
     {
         return optionSelectionText.iterator();
     }
+    
+    @Override
+    public int getQuestionTypeID()
+    {
+        return QuestionTypeID;
+    }
 
     /**
      *

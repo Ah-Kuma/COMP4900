@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:layout_margin="15dp">
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView 
+            android:text="Welcome!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textColor="@color/lgreen"
+            style="@android:style/TextAppearance.Large"/>
+        <View
+            android:layout_height="2dp"
+            android:layout_width="fill_parent"
+            android:background="@android:color/darker_gray" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+	    <ViewFlipper
+	        android:id="@+id/viewFlip"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent">
+	        
+	        <!-- VIEW ONE -->
+	        <LinearLayout
+	            android:id="@+id/firstrun_v1"
+	            android:orientation="vertical"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent">
+	            <TextView 
+	            android:text="@string/welcome_message"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:padding="4dp"/>
+	        </LinearLayout>
+	        
+	        <!-- VIEW TWO -->
+	        <LinearLayout
+	            android:id="@+id/firstrun_v2"
+	            android:orientation="vertical"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent">
+	            <TextView 
+	            android:text="Please enter your name."
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="4dp"
+	            android:layout_marginBottom="10dp"/>
+	            <EditText
+		            android:id="@+id/first_firstName"
+		            android:layout_width="250dp"
+		            android:layout_height="wrap_content"
+		            android:hint="First"
+		            android:layout_gravity="center_horizontal"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+        		</EditText>
+        		<EditText
+		            android:id="@+id/first_lastName"
+		            android:layout_width="250dp"
+		            android:layout_height="wrap_content"
+		            android:hint="Last"
+		            android:layout_gravity="center_horizontal"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+        		</EditText>
+	        </LinearLayout>
+	        
+	        <!-- VIEW THREE -->
+	        <LinearLayout
+	            android:id="@+id/firstrun_v3"
+	            android:orientation="vertical"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent">
+	            <TextView 
+	            android:text="Enter your birthdate."
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="4dp"
+	            android:layout_marginBottom="10dp"/>
+	            <DatePicker
+		            android:id="@+id/first_datePicker"
+		            android:layout_width="wrap_content"
+		            android:spinnersShown="true"
+		            android:calendarViewShown="false"
+		            android:layout_gravity="center_horizontal"
+		            android:layout_height="wrap_content" />
+	        </LinearLayout>
+	    </ViewFlipper>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <View
+            android:layout_height="2dp"
+            android:layout_width="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/transparent"/>
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <Button
+                android:id="@+id/first_nextButton"
+                android:onClick="nextView"
+	            android:layout_width="100dp"
+	            android:layout_height="wrap_content"
+	            android:text="Next"
+	            android:layout_alignParentRight="true"/>
+            <Button
+                android:id="@+id/first_backButton"
+                android:onClick="prevView"
+	            android:layout_width="100dp"
+	            android:layout_height="wrap_content"
+	            android:text="Back"
+	            android:clickable="false"
+	            android:visibility="invisible"/>
+            <TextView 
+                android:id="@+id/first_pageNumber"
+	            android:text="1/3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp"
+	            android:padding="4dp"
+	            android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+        
+    </LinearLayout>
+    
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+10
+
+dir
+85
+http://svn.nolifefool.com/projects/HealthDroid/res
+http://svn.nolifefool.com/projects
+
+
+
+2012-04-30T02:00:50.978159Z
+85
+william
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+676105dc-138c-47a8-ab90-fb205ce9e362
+
+values
+dir
+
+drawable-hdpi
+dir
+
+anim
+dir
+
+menu
+dir
+
+values-v11
+dir
+
+drawable-ldpi
+dir
+
+drawable-mdpi
+dir
+
+drawable-xhdpi
+dir
+
+layout
+dir
+

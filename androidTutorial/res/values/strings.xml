@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, HealthDroidActivity!</string>
+    <string name="app_name">HealthDroid</string>
+    <string name="welcome_message">Thank you for using ThisShittyProgram. Before we start we need you to enter some information about yourself. This information is stored on your phone only and will not be shared with anyone else. Except for me, because I get to look at everything.</string>
+
+</resources>

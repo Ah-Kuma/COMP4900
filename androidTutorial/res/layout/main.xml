@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" >
+
+            <ImageButton
+                android:id="@+id/main_buttonEntry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:src="@drawable/button_entry" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text="Add entry" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/main_buttonBackup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:src="@drawable/button_backup" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text="Backup/Restore" />
+        </FrameLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <ImageButton
+                android:id="@+id/main_buttonReport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:src="@drawable/button_report" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text="View reports" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/main_buttonSomething"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:src="@drawable/button_something" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:padding="5dp"
+                android:text="thisDoesNothing" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

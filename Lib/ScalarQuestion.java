@@ -55,8 +55,6 @@ public class ScalarQuestion
         super(questionText);
         Scanner scanner = new Scanner(scalarValues);
         
-        int 
-        
         if(scanner.hasNextInt())
         {
             scanner.

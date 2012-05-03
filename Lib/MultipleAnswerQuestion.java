@@ -12,6 +12,11 @@ public class MultipleAnswerQuestion extends Question {
 
     private static final int QuestionTypeID = 2;
     
+    public int getQuestionOptionsSize()
+    {
+        return QuestionOptions.size();
+    }
+    
     private ArrayList<String> QuestionOptions;
     
     @Override

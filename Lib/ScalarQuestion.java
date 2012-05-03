@@ -1,7 +1,7 @@
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 
@@ -24,14 +24,7 @@ public class ScalarQuestion
     {
         return QuestionTypeID;
     }
-    
-    private int MinScaleValue;
-    
-    public int getMinScaleValue()
-    {
-        return MinScaleValue;
-    }
-    
+        
     private int MaxScaleValue;
 
     public int getMaxScaleValue()
@@ -40,26 +33,25 @@ public class ScalarQuestion
     }
     
     @Override
-    public Iterator<String> getQuestionOptions()
+    public ListIterator<String> getQuestionOptions()
     {
-        ArrayList<String> options = new ArrayList<String>(2);
-        options.add(String.valueOf(MinScaleValue));
+        ArrayList<String> options = new ArrayList<String>(1);
         options.add(String.valueOf(MaxScaleValue));
         
-        return options.iterator();
+        return options.listIterator();
     }
     
     public ScalarQuestion(String scalarValues,
-                          String questionText)
+                          String questionText) throws InstantiationException
     {
         super(questionText);
         Scanner scanner = new Scanner(scalarValues);
-        
-        if(scanner.hasNextInt())
+                    
+        if(!scanner.hasNextInt())
         {
-            scanner.
+            throw new InstantiationException();
         }
-        MinScaleValue = scanner.nextInt();
+
         MaxScaleValue = scanner.nextInt();
     }
 }

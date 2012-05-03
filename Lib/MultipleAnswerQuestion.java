@@ -8,7 +8,7 @@ import java.util.ListIterator;
  * @author A00764761
  * @version 1.0 
  */
-public class MultipleAnswer extends Question {
+public class MultipleAnswerQuestion extends Question {
 
     private static final int QuestionTypeID = 2;
     
@@ -27,14 +27,14 @@ public class MultipleAnswer extends Question {
     }
 
     /**
-     * MultipleAnswer Constructor. Takes two strings as arguments. First string consists of a string of 
+     * MultipleAnswerQuestion Constructor. Takes two strings as arguments. First string consists of a string of 
      * question options. Each option string must be enclosed in " " characters. The contents 
      * of each option can be multi-worded and contain  
      * @param rawQuestionOptions The options for the question response.
      * @param questionText The text portion of the question query.
      * @throws InstantiationException if malformed option syntax is encountered.
      */
-    public MultipleAnswer(String rawQuestionOptions, String questionText) throws InstantiationException
+    public MultipleAnswerQuestion(String rawQuestionOptions, String questionText) throws InstantiationException
     {
         super(questionText);
         

@@ -17,7 +17,7 @@ public class MultipleAnswer extends Question {
     @Override
     public ListIterator<String> getQuestionOptions()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return QuestionOptions.listIterator();
     }
 
     @Override
@@ -26,6 +26,14 @@ public class MultipleAnswer extends Question {
         return QuestionTypeID;
     }
 
+    /**
+     * MultipleAnswer Constructor. Takes two strings as arguments. First string consists of a string of 
+     * question options. Each option string must be enclosed in " " characters. The contents 
+     * of each option can be multi-worded and contain  
+     * @param rawQuestionOptions The options for the question response.
+     * @param questionText The text portion of the question query.
+     * @throws InstantiationException if malformed option syntax is encountered.
+     */
     public MultipleAnswer(String rawQuestionOptions, String questionText) throws InstantiationException
     {
         super(questionText);
@@ -44,10 +52,15 @@ public class MultipleAnswer extends Question {
         
         for(String s: questionOptions)
         {
+            //trim off any extra whitespace.
+            s.trim();
+            
+            //test proper option syntax enclosed in "".
             if(!(s.startsWith("\"") && s.endsWith("\"")))
             {
                 throw new InstantiationException("Invalid option format: not enclosed in \" marks.");
             }
+            //remove "" and pass as valid option.
             String option = s.substring(1, s.length() - 2);
             
             QuestionOptions.add(option);

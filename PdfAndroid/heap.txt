@@ -1,0 +1,1 @@
+eclipse -vmargs -Xmx1024M

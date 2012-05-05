@@ -18,7 +18,8 @@ public class MainTest
         System.out.println(MCQuestion.class.hashCode());
         System.out.println(ScalarQuestion.class.hashCode());
         System.out.println(MultipleAnswerQuestion.class.hashCode());
-
+        System.out.println(NewQuestionType.class.hashCode());
+        
         System.out.println();
         
         try
@@ -29,11 +30,13 @@ public class MainTest
                                                                "\"12\"");
             MultipleAnswerQuestion maQuestion = new MultipleAnswerQuestion("\"hello\"",
                                                                            "\"world\"");
-
+            NewQuestionType nqt = new NewQuestionType("meh");
+            
             System.out.println("MCQ: " + mcQuestion.getQuestionTypeID());
             System.out.println("SQ: " + scalarQuestion.getQuestionTypeID());
             System.out.println("MAQ: " + maQuestion.getQuestionTypeID());
-
+            System.out.println("NQT: " + nqt.getQuestionTypeID());
+            
             if(mcQuestion.getQuestionTypeID() == MCQuestion.class.hashCode())
             {
                 System.out.println(true);
@@ -43,6 +46,10 @@ public class MainTest
                 System.out.println(true);
             }
             if(scalarQuestion.getQuestionTypeID() == ScalarQuestion.class.hashCode())
+            {
+                System.out.println(true);
+            }
+            if(nqt.getQuestionTypeID() == NewQuestionType.class.hashCode())
             {
                 System.out.println(true);
             }

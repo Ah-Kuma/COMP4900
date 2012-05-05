@@ -27,9 +27,9 @@ public class MainTest
             MultipleAnswerQuestion maQuestion = new MultipleAnswerQuestion("\"hello\"",
                                                                            "\"world\"");
 
-            System.out.println(mcQuestion.QuestionTypeID);
-            System.out.println(scalarQuestion.QuestionTypeID);
-            System.out.println(maQuestion.QuestionTypeID);
+            System.out.println("MCQ: " + mcQuestion.QuestionTypeID);
+            System.out.println("SQ: " + scalarQuestion.QuestionTypeID);
+            System.out.println("MAQ: " + maQuestion.QuestionTypeID);
 
             if(mcQuestion.QuestionTypeID == MCQuestion.class.hashCode())
             {

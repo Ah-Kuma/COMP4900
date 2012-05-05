@@ -17,14 +17,7 @@ public class ScalarQuestion
     extends Question
 {
     
-    private static final int QuestionTypeID = 1;
-    
-    @Override
-    public int getQuestionTypeID()
-    {
-        return QuestionTypeID;
-    }
-        
+    public static final int QuestionTypeID = ScalarQuestion.class.hashCode();        
     private int MaxScaleValue;
 
     public int getMaxScaleValue()
@@ -49,7 +42,7 @@ public class ScalarQuestion
                     
         if(!scanner.hasNextInt())
         {
-            throw new InstantiationException();
+            throw new InstantiationException("No integer value for scale.");
         }
 
         MaxScaleValue = scanner.nextInt();

@@ -10,7 +10,7 @@ import java.util.ListIterator;
  */
 public class MultipleAnswerQuestion extends Question {
 
-    private static final int QuestionTypeID = 2;
+    public static final int QuestionTypeID = MultipleAnswerQuestion.class.hashCode();
     
     public int getQuestionOptionsSize()
     {
@@ -23,12 +23,6 @@ public class MultipleAnswerQuestion extends Question {
     public ListIterator<String> getQuestionOptions()
     {
         return QuestionOptions.listIterator();
-    }
-
-    @Override
-    public int getQuestionTypeID()
-    {
-        return QuestionTypeID;
     }
 
     /**

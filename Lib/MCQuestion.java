@@ -1,7 +1,7 @@
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 
@@ -14,18 +14,12 @@ public class MCQuestion
     extends Question
 {
     private ArrayList<String> optionSelectionText;
-    public static final int QuestionTypeID = 0;
+    public static final int QuestionTypeID = MCQuestion.class.hashCode();
 
     @Override
-    public Iterator<String> getQuestionOptions()
+    public ListIterator<String> getQuestionOptions()
     {
-        return optionSelectionText.iterator();
-    }
-
-    @Override
-    public int getQuestionTypeID()
-    {
-        return QuestionTypeID;
+        return optionSelectionText.listIterator();
     }
 
     /**

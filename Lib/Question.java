@@ -1,6 +1,6 @@
 
 
-import java.util.Iterator;
+import java.util.ListIterator;
 
 
 /**
@@ -30,7 +30,7 @@ public abstract class Question
         this.QuestionText = questionText;
     }
     
-    public abstract Iterator<String> getQuestionOptions();
-    public abstract int getQuestionTypeID();
+    public abstract ListIterator<String> getQuestionOptions();
+    //public abstract int getQuestionTypeID();
     
 }

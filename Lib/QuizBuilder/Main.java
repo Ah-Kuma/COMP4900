@@ -1,7 +1,7 @@
 package QuizBuilder;
 
 
-import generated.QuizFactory;
+import generated.ObjectFactory;
 import java.util.List;
 import generated.HealthismQuiz;
 import generated.HealthismQuiz.Question;
@@ -25,7 +25,6 @@ public class Main
         throws JAXBException
     {
         JAXBContext context = JAXBContext.newInstance(HealthismQuiz.class);
-        QuizFactory qf = new QuizFactory();
 
         Unmarshaller unmarshaller = context.createUnmarshaller();
 
@@ -38,20 +37,16 @@ public class Main
     {
         List<Question> questions = quiz.getQuestion();
 
-        for(int i = 0; i < questions.size(); i++)
+        for(Question question : questions)
         {
-            System.out.println("Question" + (i + 1));
-            System.out.println("QuestionType = " + questions.get(i).
-                getType());
-            List<String> options = questions.get(i).
-                getOptions().
-                getOption();
+            System.out.println("Question #" + question.getNumber());
+            System.out.println("QuestionType = " + question.getType());
+            List<String> options = question.getOptions().getOption();
 
-            int j = 0;
+            int i = 0;
             for(String option : options)
             {
-                System.out.print("Option" + ++j + ": ");
-                System.out.println(option);
+                System.out.print("Option" + ++i + ": " + option);
             }
         }
     }

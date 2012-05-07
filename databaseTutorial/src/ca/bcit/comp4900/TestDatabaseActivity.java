@@ -1,20 +1,21 @@
 package ca.bcit.comp4900;
 
-import java.util.List;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.zip.Inflater;
 
-import ca.bcit.comp4900.Comment;
-import ca.bcit.comp4900.CommentDataSource;
-
-
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class TestDatabaseActivity extends ListActivity
+public class TestDatabaseActivity extends Activity
 {
-    private CommentDataSource datasource;
+    private QuestionDataSource datasource;
+    EditText text, text2;
+    TextView textview;
     
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -22,32 +23,48 @@ public class TestDatabaseActivity extends ListActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        datasource = new CommentDataSource(this);
+        datasource = new QuestionDataSource(this);
         datasource.open();
         
-        List<Comment> values = datasource.getAllComments();
         
-        //Use the SimpleCursorAdapter to show the elements in a ListView
-        ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this,
-            android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
     }
+    
+    public void changeText(){
+    	
+    	text = (EditText)findViewById(R.id.idBox);
+    	text2 = (EditText)findViewById(R.id.questionBox);
+        textview = (TextView)findViewById(R.id.myText);
+        String questionText, questionNumber = text.getText().toString();
+        questionText = text2.getText().toString();
+        datasource.storeQuestion(Integer.parseInt(questionNumber), questionText);
+        String result = datasource.getRaj();
+        textview.setText(result);
+    }
+    /*
+     <ListView 
+	    android:layout_height="wrap_content" 
+	    android:layout_width="fill_parent" 
+	    android:id="@android:id/list" 
+	    android:text="@string/hello"/> 
+     */
     
     //Will be called via the onClick attribute of the buttons in main.xml
     public void onClick(View view)
     {
-        ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
-        Comment comment = null;
+        //@SuppressWarnings("unchecked")
+		//ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
+        //Comment comment = null;
         switch (view.getId())
         {
             case R.id.add:
-                    String[] comments = new String[] {"Kevin", "Tim", "Will", "Raj"};
-                    int nextInt = new Random().nextInt(3);
+                    changeText();
+            		//String[] comments = new String[] {"Kevin", "Tim", "Will", "Raj"};
+                    //int nextInt = new Random().nextInt(3);
                     //Save the new comment to the database
-                    comment = datasource.createComment(comments[nextInt]);
-                    adapter.add(comment);
+                    //comment = datasource.createComment(comments[nextInt]);
+                    //adapter.add(comment);
                     break;
-            case R.id.delete:
+            /*case R.id.delete:
                 if(getListAdapter().getCount() > 0)
                 {
                     comment = (Comment) getListAdapter().getItem(0);
@@ -55,10 +72,11 @@ public class TestDatabaseActivity extends ListActivity
                     adapter.remove(comment);
                 }
                 break;
+                */
         }
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
     }
-    
+   
     @Override
     protected void onResume()
     {
@@ -72,4 +90,5 @@ public class TestDatabaseActivity extends ListActivity
         datasource.close();
         super.onPause();
     }
+    
 }

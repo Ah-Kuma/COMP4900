@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 COMP 4900 Repo
 =======
 COMP4900

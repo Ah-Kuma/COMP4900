@@ -7,7 +7,27 @@
 	<LinearLayout 
 	    android:layout_height="wrap_content" 
 	    android:layout_width="wrap_content" 
+	    android:orientation="vertical"
 	    android:id="@+id/group"> 
+	    
+	    <EditText
+	        android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:hint="Enter question number" 
+	        android:id="@+id/idBox"/>
+	    
+	    <EditText
+	       	android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:hint="Enter question" 
+	        android:id="@+id/questionBox"/>
+	    
+	   	<TextView
+	        android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:text="default text" 
+	        android:id="@+id/myText"/>
+	    
 	    
 	    <Button 
 	        android:layout_height="wrap_content" 
@@ -25,10 +45,5 @@
 	 
 	</LinearLayout> 
 	 
-	<ListView 
-	    android:layout_height="wrap_content" 
-	    android:layout_width="fill_parent" 
-	    android:id="@android:id/list" 
-	    android:text="@string/hello"/> 
 	     
 </LinearLayout>

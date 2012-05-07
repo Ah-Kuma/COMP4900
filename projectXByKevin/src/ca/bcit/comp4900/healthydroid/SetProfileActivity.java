@@ -16,6 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+/**
+ * This activity class let users to let his or her profile when
+ * he or she launches this application for the first time
+ * or the profile has been reset.
+ * @author Kevin
+ *
+ */
 public class SetProfileActivity extends Activity {
     private int currentPage;
     public static final int MAX_PAGE = 4;
@@ -79,11 +86,10 @@ public class SetProfileActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "Please fill in your name", 300).show();
                 return;
             }
-            nextButton.setText("Finish");
             break;
         case R.id.setProfile_view3:
         	gender = genderSpin.getSelectedItem().toString();
-        	Toast.makeText(getApplicationContext(), gender, 300).show();
+        	nextButton.setText("Finish");
         	break;
         case R.id.setProfile_view4:
             dayOfMonth = datePick.getDayOfMonth();
@@ -151,9 +157,8 @@ public class SetProfileActivity extends Activity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("firstName", firstName);
         editor.putString("lastName", lastName);
-        editor.putInt("dayOfMonth", dayOfMonth);
-        editor.putInt("month", month);
-        editor.putInt("year", year);
+        editor.putString("gender", gender);
+        editor.putString("birthdate", (dayOfMonth + "-" + month + "-" + year));
         editor.commit();
     }
 }

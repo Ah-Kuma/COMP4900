@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/quiz_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="8"
         android:orientation="vertical" >
     </LinearLayout>
@@ -33,30 +33,33 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="fill_parent">
 			
-            <Button
-                android:id="@+id/quiz_backButton"
+            <Button  
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_margin="10dp"
-                android:text="Back" />
+                android:text="Back" 
+                android:id="@+id/quiz_backButton"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="1/1" />
+                android:text="1/1" 
+                android:id="@+id/quiz_curQuestNumText"/>
 
             <Button
-                android:id="@+id/quiz_nextButton"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
-                android:text="Next" />
+                android:text="Next"
+                android:id="@+id/quiz_nextButton" />
+            
         </RelativeLayout>
+        
     </LinearLayout>
 
 </LinearLayout>

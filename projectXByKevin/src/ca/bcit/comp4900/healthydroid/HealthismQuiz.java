@@ -2,10 +2,10 @@ package ca.bcit.comp4900.healthydroid;
 
 
 
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
+
+import ca.bcit.comp4900.healthydroid.question.Question;
 
 
 /*
@@ -22,9 +22,8 @@ public class HealthismQuiz {
 
     private ArrayList<Question> quizQuestions;
     
-    public HealthismQuiz(){
-    	quizQuestions = new ArrayList<Question>(0);
-    	
+    public int getQuizSize(){
+    	return quizQuestions.size();
     }
     
     public void addQuestion(Question question)
@@ -50,10 +49,14 @@ public class HealthismQuiz {
         }
         else if(index < 0)
         {
-            //returns the start of the list if the index is greater 
+            //returns the first question if the index is smaller than 0;
             return quizQuestions.get(0);
         }
         return quizQuestions.get(index);
     }
+    
+    public HealthismQuiz()
+    {
+        quizQuestions = new ArrayList<Question>();
+    }
 }
-

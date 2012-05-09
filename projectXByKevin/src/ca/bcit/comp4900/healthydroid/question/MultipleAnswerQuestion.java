@@ -34,8 +34,8 @@ public class MultipleAnswerQuestion extends Question {
 
     /**
      * MultipleAnswerQuestion Constructor. Takes two strings as arguments. First string consists of a string of 
-     * question options. Each option string must be enclosed in " " characters. The contents 
-     * of each option can be multi-worded and contain  
+     * question options. Each option string must be enclosed in " " characters and separate by a comma. The contents 
+     * of each option can be multi-worded.  
      * @param rawQuestionOptions The options for the question response.
      * @param questionText The text portion of the question query.
      * @throws InstantiationException if malformed option syntax is encountered.
@@ -67,7 +67,7 @@ public class MultipleAnswerQuestion extends Question {
                 throw new InstantiationException("Invalid option format: not enclosed in \" marks.");
             }
             //remove "" and pass as valid option.
-            String option = s.substring(1, s.length() - 2);
+            String option = s.substring(1, s.length() - 1);
             
             QuestionOptions.add(option);
         }

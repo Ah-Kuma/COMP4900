@@ -124,7 +124,7 @@ public class HealthyDroidActivity extends Activity {
     	   BarChart bar = new BarChart();
     	   Intent barIntent = bar.getIntent(this);
     	   
-    	   startActivity(barIntent);
+    	   startActivity(lineIntent);
        }
        
        /**

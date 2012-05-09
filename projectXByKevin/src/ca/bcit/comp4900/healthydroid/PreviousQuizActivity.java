@@ -173,14 +173,14 @@ public class PreviousQuizActivity extends Activity {
     			TextView checklistText;
     			CheckBox checkBox;
     			
-    			childLayout = (LinearLayout)inflater.inflate(R.layout.checklistquestion, null);
+    			childLayout = (LinearLayout)inflater.inflate(R.layout.maquestion, null);
     			lLayout.addView(childLayout);
     			//Add slide out animation to question one
     			if(currentQuestion == 1)
     				childLayout.setAnimation(AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.view_transition_out_left));
     			
     			//Set the question
-    			checklistText = (TextView) findViewById(R.id.checklistQuestionText);
+    			checklistText = (TextView) findViewById(R.id.maQuestionText);
     			checklistText.setText(questionText);
     			
     			viewList.add(childLayout);

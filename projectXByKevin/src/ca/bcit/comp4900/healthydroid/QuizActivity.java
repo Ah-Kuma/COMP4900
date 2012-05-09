@@ -1,12 +1,16 @@
 package ca.bcit.comp4900.healthydroid;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.ListIterator;
 
 import ca.bcit.comp4900.R;
+import ca.bcit.comp4900.healthydroid.chart.LineChart;
 import ca.bcit.comp4900.healthydroid.question.MCQuestion;
+import ca.bcit.comp4900.healthydroid.question.MultipleAnswerQuestion;
 import ca.bcit.comp4900.healthydroid.question.Question;
+import ca.bcit.comp4900.healthydroid.question.ScalarQuestion;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,15 +25,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A class that displays and processes the quiz.
- * It also stores all the result in an arrayList and passes it to the database adapter class
+ * It also stores all the result in an arrayList and passes it to the database adapter class.
  * @author Kevin
- *
  */
 public class QuizActivity extends Activity {
 	private ArrayList<LinearLayout> viewList;
+	private ArrayList[] resultList;
+	private int [] viewTypeArray;
 	private LinearLayout lLayout;
 	private LayoutInflater inflater;
 	private int currentView = 1;
@@ -40,21 +46,34 @@ public class QuizActivity extends Activity {
 		setContentView(R.layout.quiz);
 		
 		viewList = new ArrayList<LinearLayout>(0);
+		
 		HealthismQuiz quiz = new HealthismQuiz();
 		quiz.addQuestion(new MCQuestion("A B C D", "Your fav letter?"));
 		quiz.addQuestion(new MCQuestion("E F G H", "Your least fav letter?"));
 		quiz.addQuestion(new MCQuestion("I J K", "Letter?"));
+		try {
+			quiz.addQuestion(new ScalarQuestion("3", "Scale"));
+			quiz.addQuestion(new MultipleAnswerQuestion("\"X\",\"Y\",\"Z\"","Question"));
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		ListIterator<Question> it;
 		it = quiz.getQuestions();
+		
+		viewSize = quiz.getQuizSize();
+		resultList = new ArrayList[viewSize];
+		viewTypeArray = new int [viewSize];
 		
 		for (int i = 0; i < quiz.getQuizSize(); i++) {
 			Question q = it.next();
 			loadQuiz(q.getQuestionTypeID(), q.getQuestionText(), q.getQuestionOptions());
+			viewTypeArray[i] = q.getQuestionTypeID();
 		}
 		
 		
-		viewSize = viewList.size();
-		
+
 		initFirstQuestion();
 		
 		// Call the nextButtonOnClick method when the next button is clicked
@@ -93,7 +112,8 @@ public class QuizActivity extends Activity {
 			RadioButton b;
 			RadioGroup radioGroup;
 			int buttonCount = 0;
-
+			
+			//Add a question view into the main quiz view
 			childLayout = (LinearLayout) inflater.inflate(R.layout.mcquestion, null);
 			lLayout.addView(childLayout);
 			// Set the question
@@ -115,7 +135,8 @@ public class QuizActivity extends Activity {
 		case 1:
 			SeekBar seekBar;
 			TextView scalarText;
-
+			
+			//Add a question view into the main quiz view
 			childLayout = (LinearLayout) inflater.inflate(R.layout.scalarquestion, null);
 			lLayout.addView(childLayout);
 			
@@ -133,17 +154,28 @@ public class QuizActivity extends Activity {
 
 		case 2:
 			TextView checklistText;
-			CheckBox checkBox;
-
-			childLayout = (LinearLayout) inflater.inflate(R.layout.checklistquestion, null);
+			LinearLayout checkBoxView;
+			int checkBoxCount = 0;
+			
+			//Add a question view into the main quiz view
+			childLayout = (LinearLayout) inflater.inflate(R.layout.maquestion, null);
 			lLayout.addView(childLayout);
-			// Set the question
-			checklistText = (TextView) findViewById(R.id.checklistQuestionText);
+			
+			//Set the question
+			checklistText = (TextView) findViewById(R.id.maQuestionText);
 			checklistText.setText(questionText);
-
+			
+			checkBoxView = (LinearLayout) findViewById(R.id.ma_checkBoxView);
+			//Create checkBoxes and set their texts
+			while(it.hasNext()){
+				checkBoxView.addView(new CheckBox(this.getBaseContext()));
+				((CheckBox) checkBoxView.getChildAt(checkBoxCount++)).setText(it.next());
+			}
 			viewList.add(childLayout);
 			lLayout.removeAllViews();
 			break;
+		default:
+			throw new IllegalArgumentException("Unknown view type");
 		}
 		
 	}
@@ -165,15 +197,32 @@ public class QuizActivity extends Activity {
 	 * @param v
 	 */
 	public void nextButtonOnClick(View v) {
+		//Store the result of the current view(question)
+		saveResult();
+		
+		//Save the results into the database and exit this activity
 		if(currentView == viewSize){	
-			// Store results and pass them to database adapter class
+			// Pass results to database adapter class
 			// ......
-
+			final Calendar c = Calendar.getInstance();
+			LineChart line = new LineChart();
+			line.setData(2012509, 2);
+			//line.setData(20120410, 1);
+			//line.setData(20120503, 3);
+			for(int i= 0; i < viewTypeArray.length; i++){
+				if(viewTypeArray[i] == 1)
+					line.setData(Integer.parseInt("" + c.get(Calendar.YEAR)+ (c.get(Calendar.MONTH) + 1 )+c.get(Calendar.DATE))
+							, Integer.parseInt((String) resultList[i].get(0)));
+			
+			}
 			// Return to the main activity/screen
 			finish();
 			Intent intent = new Intent(this, HealthyDroidActivity.class);
 			startActivity(intent);
 		}
+		
+		//Store results
+		
 		
 		currentView++;
 
@@ -206,13 +255,10 @@ public class QuizActivity extends Activity {
 			lLayout.addView(viewList.get(currentView - 1));
 			return;
 		}
-
-
 	}
 
 	/**
-	 * Change the view to the previous view after user clicks the back button
-	 * 
+	 * Change the view to the previous view after user clicks the back button.
 	 * @param v
 	 */
 	public void backButtonOnClick(View v) {
@@ -238,5 +284,36 @@ public class QuizActivity extends Activity {
 						R.anim.view_transition_in_right));
 		lLayout.addView(viewList.get(currentView - 1));
 
+	}
+	
+	/**
+	 * Save results of the current view(question) into the result array.
+	 */
+	private void saveResult(){
+		
+		switch(viewTypeArray[currentView - 1]){
+		case 0:
+			RadioGroup radioGroup = (RadioGroup)findViewById(R.id.mcRadioGroup);
+			resultList[currentView - 1] = new ArrayList<String>();
+			resultList[currentView - 1].add(((RadioButton)findViewById(radioGroup.getCheckedRadioButtonId())).getText());					
+			//Toast.makeText(getApplicationContext(), (String)resultList[currentView -1].get(0), 300).show();
+			break;
+		case 1:
+			SeekBar seekBar = (SeekBar)findViewById(R.id.scalarSeekBar);
+			resultList[currentView -1] = new ArrayList<String>();
+			resultList[currentView -1].add(Integer.toString(seekBar.getProgress() + 1));
+			break;
+		case 2:
+			LinearLayout checkBoxView = (LinearLayout) findViewById(R.id.ma_checkBoxView);
+			
+			resultList[currentView - 1] = new ArrayList<String>();
+			for(int i = 0; i < checkBoxView.getChildCount(); i++){
+				if(((CheckBox)checkBoxView.getChildAt(i)).isChecked())				
+					resultList[currentView - 1].add(((CheckBox)checkBoxView.getChildAt(i)).getText());
+			}
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown view type");
+		}
 	}
 }

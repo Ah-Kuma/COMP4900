@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:title="Time">
+        <ca.bcit.comp4900.healthydroid.TimePreference 
+            android:title="Time"
+            android:key="time"/>
+        <ca.bcit.comp4900.healthydroid.DatePreference
+            android:key="notificationPeriod"
+            android:title="Notification Day"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Reset">
+        <Preference
+            android:title="Reset All Settings"
+            android:key="resetButton"
+            android:summary="Clears all the information stored in your setting."/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

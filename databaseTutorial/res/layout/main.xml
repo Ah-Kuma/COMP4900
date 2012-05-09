@@ -13,7 +13,7 @@
 	    <EditText
 	        android:layout_height="wrap_content" 
 	        android:layout_width="wrap_content"
-	        android:hint="Enter question number" 
+	        android:hint="Enter the question number" 
 	        android:id="@+id/idBox"/>
 	    
 	    <EditText
@@ -22,10 +22,28 @@
 	        android:hint="Enter question" 
 	        android:id="@+id/questionBox"/>
 	    
+	    <EditText
+	       	android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:hint="Enter answer" 
+	        android:id="@+id/answerBox"/>
+	    
+	    <EditText
+	       	android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:hint="Enter starting date" 
+	        android:id="@+id/startDate"/>
+	    
+	    <EditText
+	       	android:layout_height="wrap_content" 
+	        android:layout_width="wrap_content"
+	        android:hint="Enter ending date" 
+	        android:id="@+id/endDate"/>
+	    
 	   	<TextView
 	        android:layout_height="wrap_content" 
 	        android:layout_width="wrap_content"
-	        android:text="default text" 
+	        android:text="Query results will show here" 
 	        android:id="@+id/myText"/>
 	    
 	    
@@ -34,14 +52,14 @@
 	        android:layout_width="wrap_content" 
 	        android:id="@+id/add" 
 	        android:onClick="onClick" 
-	        android:text="Add New"/> 
+	        android:text="Add Question"/> 
 	    
 	    <Button 
 	        android:layout_height="wrap_content" 
 	        android:layout_width="wrap_content" 
 	        android:id="@+id/delete" 
 	        android:onClick="onClick" 
-	        android:text="Delete First"/> 
+	        android:text="Query"/> 
 	 
 	</LinearLayout> 
 	 

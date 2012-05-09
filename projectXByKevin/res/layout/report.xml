@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:padding="15dp">
+    
+	<TextView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Send Report"
+	    android:id="@+id/report_message"/>
+	
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:padding="10dp"
+	    android:layout_weight="8">
+	    
+	    
+	    <TextView 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:text="Please enter your e-mail"
+	    android:padding="10dp"
+	    android:id="@+id/report_emailText"/>
+	    
+	    <EditText 
+	        android:layout_width="250dp"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:hint="Your E-mail"
+	        android:id="@+id/report_emailEditText"/>
+	    
+	    <TextView 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_horizontal"
+		    android:text="Additional message for your doctor"
+		    android:padding="10dp"
+		    android:id="@+id/report_additionalText"/>
+	    
+	    <EditText 
+	        android:layout_width="250dp"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:hint="Additional Message"
+	        android:id="@+id/report_additionalEditText"/>
+	    
+	</LinearLayout>
+	
+		<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:layout_weight="2">
+	    
+	    <Button 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:text="Send Report"
+	        android:id="@+id/report_sendButton"/>
+	    
+	</LinearLayout>
+	
+</LinearLayout>

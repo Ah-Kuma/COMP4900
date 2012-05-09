@@ -1,0 +1,13 @@
+package ca.bcit.comp4900;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+public class HealthyDroidMultipleAnswerAdapter 
+{
+	public static final String TABLE_MA = "multiple_answer";
+	public static final String COLUMN_INSTANCE = "_instance";
+	public static final String COLUMN_QUESTION = "question";
+}

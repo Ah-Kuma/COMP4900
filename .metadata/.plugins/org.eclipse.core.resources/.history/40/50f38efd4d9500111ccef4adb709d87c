@@ -1,0 +1,60 @@
+package ca.bcit.comp4900;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+public class HealthyDroidQuizHelper extends SQLiteOpenHelper
+{
+	public static final String TABLE_QUIZ = "quiz";
+	public static final String COLUMN_INSTANCE = "_instance";
+	public static final String COLUMN_QUESTION = "question";
+	
+	private static final String DATABASE_NAME = "healthism.db";
+	private static final int DATABASE_VERSION = 1;
+	private String[] questions;
+	private int numberOfQuestions;
+	
+	//Database creation sql statement
+	private static final String CREATE_TABLE_QUIZ = "create table "
+			+ TABLE_QUIZ + "( " + COLUMN_INSTANCE 
+			+ " integer primary key autoincrement, " + COLUMN_QUESTION
+			+ " text not null);";
+	private static final String CREATE_TABLE_MA = "create table "
+			+ "multiple_answer" + "( " + COLUMN_INSTANCE
+			+ " integer primary key autoincrement, " + COLUMN_QUESTION
+			+ " text not null);";
+	
+	public HealthyDroidQuizHelper(Context context, HealthismQuiz quiz)
+	{
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		numberOfQuestions = quiz.getSize();
+		initQuestions();
+	}
+	
+	private void initQuestions()
+	{
+		for(int i=0; i<numberOfQuestions; i++)
+		{
+			String q = "Question" + ++i;
+			questions[i] = q;
+		}
+	}
+	@Override
+	public void onCreate(SQLiteDatabase db)
+	{
+		db.execSQL(CREATE_TABLE_QUIZ);
+		db.execSQL(CREATE_TABLE_MA);
+	}
+	
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+	{
+		Log.w(HealthyDroidQuizHelper.class.getName(),
+				"Upgrading database from version "+ oldVersion + " to "
+				+ newVersion + ", which will destroy all old data");
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ);
+		onCreate(db);
+	}
+}

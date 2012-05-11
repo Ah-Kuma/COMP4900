@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_weight="1">
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_weight="2">
+    	
+        <TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/scalarQuestionText"
+    		android:text="Default scalar question"
+    		android:layout_gravity="center"/>
+        
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_weight="1">
+    </LinearLayout>
+    
+    <LinearLayout 
+	    android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+    	android:orientation="vertical"
+    	android:layout_weight="6">
+		
+        <TextView
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/scalarAnswer"
+    		android:text="1"
+    		android:layout_gravity="center"/>
+        
+		<SeekBar
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/scalarSeekBar"
+    		android:layout_gravity="center"
+    		android:max="9"
+    		android:padding="10dp"/>
+
+	</LinearLayout>
+	
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ca.bcit.comp4900"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".healthydroid.HealthyDroidActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".healthydroid.PreviousQuizActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".healthydroid.ProfileActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".healthydroid.SetProfileActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name=".healthydroid.ReportActivity"></activity>
+        <activity android:name=".healthydroid.BackupActivity"></activity>
+        <activity android:name=".healthydroid.LineChartActivity"></activity>
+        <activity android:name="org.achartengine.GraphicalActivity"></activity>
+        <activity android:name=".healthydroid.QuizActivity"></activity>
+        <activity android:name=".healthydroid.SettingsActivity"></activity>
+        <receiver android:name=".healthydroid.AlarmReciever"></receiver>
+    </application>
+
+</manifest>

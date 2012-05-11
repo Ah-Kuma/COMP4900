@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HealthismQuiz id="0000000001">
+
+  <!-- Question1 -->
+  <Question number="1" type="ScalarQuestion">
+    <Options>
+      <Option>10</Option>
+    </Options>
+    <Text>Pick a number between 1 and 10</Text>
+  </Question>
+
+  <!-- Question 2 -->
+  <Question number="2" type="MCQuestion">
+    <Options>
+      <Option>Agree</Option>
+      <Option>Somewhat Agree</Option>
+      <Option>Disagree</Option>
+      <Option>Strongly Disagree</Option>
+    </Options>
+    <Text>Are you having fun yet?</Text>
+  </Question>
+
+  <!--Question 3 -->
+  <Question number="3" type="MAQuestion">
+    <Options>
+      <Option>Chocolate</Option>
+      <Option>Vanilla</Option>
+      <Option>Strawberry</Option>
+      <Option>Caramel</Option>
+    </Options>
+    <Text>What icecream do you like?</Text>
+  </Question>
+</HealthismQuiz>

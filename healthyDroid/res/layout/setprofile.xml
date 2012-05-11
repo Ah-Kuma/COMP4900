@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:padding="15dp">
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Set Profile"/>
+        
+    </LinearLayout>
+     
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="6">
+        
+
+	    <ViewFlipper 
+	        android:id="@+id/setProfile_viewFlip"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent">
+	        
+	        <!-- VIEW ONE -->
+	        <LinearLayout
+	            android:id="@+id/setProfile_view1"
+	            android:orientation="vertical"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent">
+	            
+	            <TextView 
+	            android:text="@string/setProfile_message"
+	            android:layout_width="wrap_content"
+	            android:layout_height="fill_parent"
+	            android:padding="4dp"/>
+	            
+	            
+	            
+	        </LinearLayout>
+	        
+	        <!-- VIEW TWO -->
+	        <LinearLayout
+	            android:id="@+id/setProfile_view2"
+	            android:orientation="vertical"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent">
+	            <TextView 
+	            android:text="Please enter your name."
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:padding="4dp"
+	            android:layout_marginBottom="10dp"/>
+	            <EditText
+		            android:id="@+id/setProfile_firstName"
+		            android:layout_width="250dp"
+		            android:layout_height="wrap_content"
+		            android:hint="First"
+		            android:layout_gravity="center_horizontal"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+        		</EditText>
+        		<EditText
+		            android:id="@+id/setProfile_lastName"
+		            android:layout_width="250dp"
+		            android:layout_height="wrap_content"
+		            android:hint="Last"
+		            android:layout_gravity="center_horizontal"
+		            android:ems="10"
+		            android:inputType="textPersonName" >
+        		</EditText>
+	        </LinearLayout>
+	    	
+	        <!-- VIEW THREE -->
+	    	<LinearLayout 
+	        	android:layout_width="fill_parent"
+	    		android:layout_height="fill_parent"
+	    		android:orientation="vertical"
+	    		android:id="@+id/setProfile_view3">
+        		
+	    	    <Spinner
+	    	        android:layout_width="250dp"
+	    	        android:layout_height="wrap_content"
+	    	        android:id="@+id/setProfile_spinner"
+	    	        android:entries="@array/setProfile_genderArray"/>"
+	    	    
+        	</LinearLayout>
+	        
+	       	<!-- VIEW FOUR -->
+	    	<LinearLayout 
+	        	android:layout_width="fill_parent"
+	    		android:layout_height="fill_parent"
+	    		android:orientation="vertical"
+	    		android:id="@+id/setProfile_view4">
+	    	
+	    		<TextView 
+	    		    android:text="Enter your birthdate"
+	    		    android:layout_width="wrap_content"
+	    		    android:layout_height="wrap_content"
+	    		    android:layout_marginBottom="10dp"/>
+	    	    
+	   			<DatePicker
+	        		android:layout_width="wrap_content"
+	    			android:layout_height="wrap_content"
+	    			android:layout_gravity="center_horizontal"
+	    			android:id="@+id/setProfile_datePicker"/>"
+	    
+	    	</LinearLayout>
+	    
+	    </ViewFlipper>
+
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2">
+	    
+        <RelativeLayout 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <Button
+                android:id="@+id/setProfile_nextButton"
+                android:onClick="nextView"
+	            android:layout_width="100dp"
+	            android:layout_height="wrap_content"
+	            android:text="Next"
+	            android:layout_alignParentRight="true"/>
+            <Button
+                android:id="@+id/setProfile_backButton"
+                android:onClick="prevView"
+	            android:layout_width="100dp"
+	            android:layout_height="wrap_content"
+	            android:text="Back"
+	            android:clickable="false"
+	            android:visibility="invisible"/>
+            <TextView 
+                android:id="@+id/setProfile_pageNumber"
+	            android:text="1/4"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="10dp"
+	            android:padding="4dp"
+	            android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+	</LinearLayout>
+	
+</LinearLayout>

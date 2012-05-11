@@ -49,7 +49,7 @@ public class TimePreference extends DialogPreference {
         if (callChangeListener(timePick.getCurrentHour()) || callChangeListener(timePick.getCurrentMinute())) {
           hour = timePick.getCurrentHour();
           minute = timePick.getCurrentMinute();
-          persistString(hour + ":" + minute);
+          persistInt(hour * 60 + minute);
         }
       }
     }

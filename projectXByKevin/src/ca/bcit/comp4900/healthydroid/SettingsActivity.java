@@ -26,12 +26,12 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     private TimePreference timePref;
     private DatePreference datePref;
     
-    
     @Override  
     public void onCreate(Bundle bundle) {  
         super.onCreate(bundle);  
         this.getPreferenceManager().setSharedPreferencesName(HealthyDroidActivity.NAMESPACE);  
         addPreferencesFromResource(R.xml.settings);  
+        
         
         // Get references to the preference items
         timePref = (TimePreference)getPreferenceScreen().findPreference(TIME_KEY);
@@ -59,7 +59,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         SharedPreferences sp = this.getPreferenceManager().getSharedPreferences();
         
         // Setup the initial values
-        timePref.setSummary(sp.getString(TIME_KEY, errorMsg));
+        //timePref.setSummary(sp.getString(TIME_KEY, errorMsg));
+        timePref.setSummary(convertMinutesToString(sp.getInt(TIME_KEY, -1)));
         datePref.setSummary(sp.getString(NOTIFICATIONPERIOD_KEY, errorMsg));
         
         // Set up a listener whenever a key changes 
@@ -69,7 +70,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     @Override
     protected void onPause() {
         super.onPause();
-
         // Unregister the listener whenever a key changes            
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);    
     }
@@ -79,12 +79,37 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // If preferences change, update the displayed preference
         if (key.equals(TIME_KEY)) {
-            timePref.setSummary(sharedPreferences.getString(TIME_KEY, errorMsg));
+            timePref.setSummary(convertMinutesToString(sharedPreferences.getInt(TIME_KEY, -1)));
         }
         if(key.equals(NOTIFICATIONPERIOD_KEY)) {
             datePref.setSummary(sharedPreferences.getString(NOTIFICATIONPERIOD_KEY, errorMsg));
         }
     }  
+    
+    /**
+     * Convert minutes into a String.
+     * @param initial minutes
+     * @return a string for displaying the time
+     */
+    private String convertMinutesToString(int initial) {
+    	if(initial == -1)
+    		return errorMsg;
+    	
+    	int hours, minutes;
+    	String result = "";
+    	String amPmThing = "AM";
+    	hours = initial / 60;
+    	minutes = initial % 60;
+    	if(hours > 12) {
+    		hours -= 12;
+    		amPmThing = "PM";
+    	} else if (hours == 0) {
+    		hours = 12;
+    	}
+    	result += hours + ":" + minutes + " " + amPmThing;
+		return result;
+    	
+    }
 }
 	
 

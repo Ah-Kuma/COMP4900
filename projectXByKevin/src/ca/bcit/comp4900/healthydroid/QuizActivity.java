@@ -2,19 +2,26 @@ package ca.bcit.comp4900.healthydroid;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import ca.bcit.comp4900.R;
 import ca.bcit.comp4900.healthydroid.chart.LineChart;
+import ca.bcit.comp4900.healthydroid.database.QuestionDataSource;
 import ca.bcit.comp4900.healthydroid.question.MCQuestion;
 import ca.bcit.comp4900.healthydroid.question.MultipleAnswerQuestion;
 import ca.bcit.comp4900.healthydroid.question.Question;
 import ca.bcit.comp4900.healthydroid.question.ScalarQuestion;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -29,13 +36,19 @@ import android.widget.Toast;
 
 /**
  * A class that displays and processes the quiz.
- * It also stores all the result in an arrayList and passes it to the database adapter class.
+ * It also stores all the result in array and arrayLists.
+ * Results will be stored when the quiz is finished.
  * @author Kevin
  */
 public class QuizActivity extends Activity {
+	
+	private QuestionDataSource dataSource;
+	private AlarmManager am;
+	
 	private ArrayList<LinearLayout> viewList;
 	private ArrayList[] resultList;
 	private int [] viewTypeArray;
+	private String [] questionTextArray;
 	private LinearLayout lLayout;
 	private LayoutInflater inflater;
 	private int currentView = 1;
@@ -45,17 +58,21 @@ public class QuizActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.quiz);
 		
-		viewList = new ArrayList<LinearLayout>(0);
+		//Open the database
+		dataSource = new QuestionDataSource(this);
+		dataSource.open();
 		
+		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		viewList = new ArrayList<LinearLayout>(0);
+
 		HealthismQuiz quiz = new HealthismQuiz();
 		quiz.addQuestion(new MCQuestion("A B C D", "Your fav letter?"));
 		quiz.addQuestion(new MCQuestion("E F G H", "Your least fav letter?"));
 		quiz.addQuestion(new MCQuestion("I J K", "Letter?"));
 		try {
-			quiz.addQuestion(new ScalarQuestion("3", "Scale"));
+			quiz.addQuestion(new ScalarQuestion("4", "Scale"));
 			quiz.addQuestion(new MultipleAnswerQuestion("\"X\",\"Y\",\"Z\"","Question"));
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -65,15 +82,17 @@ public class QuizActivity extends Activity {
 		viewSize = quiz.getQuizSize();
 		resultList = new ArrayList[viewSize];
 		viewTypeArray = new int [viewSize];
+		questionTextArray = new String [viewSize];		
 		
 		for (int i = 0; i < quiz.getQuizSize(); i++) {
 			Question q = it.next();
 			loadQuiz(q.getQuestionTypeID(), q.getQuestionText(), q.getQuestionOptions());
+			questionTextArray[i] = q.getQuestionText();
 			viewTypeArray[i] = q.getQuestionTypeID();
 		}
 		
 		
-
+		//Display the first question of the quiz
 		initFirstQuestion();
 		
 		// Call the nextButtonOnClick method when the next button is clicked
@@ -92,7 +111,7 @@ public class QuizActivity extends Activity {
 			public void onClick(View v) {
 				backButtonOnClick(v);
 			}
-		});
+		});	
 	}
 
 	/**
@@ -148,6 +167,9 @@ public class QuizActivity extends Activity {
 			seekBar = (SeekBar) findViewById(R.id.scalarSeekBar);
 			seekBar.setMax(Integer.parseInt(it.next()));
 
+			//Set a listener
+			setSeekBar(seekBar);
+			
 			viewList.add(childLayout);
 			lLayout.removeAllViews();
 			break;
@@ -177,7 +199,6 @@ public class QuizActivity extends Activity {
 		default:
 			throw new IllegalArgumentException("Unknown view type");
 		}
-		
 	}
 	
 	/**
@@ -196,33 +217,53 @@ public class QuizActivity extends Activity {
 	 * 
 	 * @param v
 	 */
-	public void nextButtonOnClick(View v) {
+	public void nextButtonOnClick(View v) {	
 		//Store the result of the current view(question)
-		saveResult();
+		try {
+			saveResult();
+		} catch(IllegalArgumentException ex) {
+			Toast.makeText(getApplicationContext(), "Please pick an answer", 300).show();
+			return;
+		}
 		
 		//Save the results into the database and exit this activity
 		if(currentView == viewSize){	
-			// Pass results to database adapter class
-			// ......
+			// Save results into the database
+			for(int i = 0; i < viewTypeArray.length; i++){
+				for(int j = 0; j < resultList[i].size(); j++)
+					dataSource.storeAnswer(i + 1, questionTextArray[i], (String)resultList[i].get(j));
+			}
+			
+			//Set alarm for notification
+			setNotifiAlarm();
+			
+			// Try to create a line graph base on the results of a scalar question
 			final Calendar c = Calendar.getInstance();
 			LineChart line = new LineChart();
+			line.setData(2012503, 1);
+			line.setData(2012508, 1);
 			line.setData(2012509, 2);
-			//line.setData(20120410, 1);
-			//line.setData(20120503, 3);
+
+			Calendar day01 = Calendar.getInstance();
+			day01.set(2012, 5, 8);
+			Calendar day02 = Calendar.getInstance();
+			day02.set(2012, 5, 9);
 			for(int i= 0; i < viewTypeArray.length; i++){
-				if(viewTypeArray[i] == 1)
+				if(viewTypeArray[i] == 1) {
+					Calendar date = Calendar.getInstance();
+					date.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE) );
+					
 					line.setData(Integer.parseInt("" + c.get(Calendar.YEAR)+ (c.get(Calendar.MONTH) + 1 )+c.get(Calendar.DATE))
 							, Integer.parseInt((String) resultList[i].get(0)));
-			
+				}
 			}
+			
+			
 			// Return to the main activity/screen
 			finish();
 			Intent intent = new Intent(this, HealthyDroidActivity.class);
 			startActivity(intent);
-		}
-		
-		//Store results
-		
+		}	
 		
 		currentView++;
 
@@ -289,13 +330,16 @@ public class QuizActivity extends Activity {
 	/**
 	 * Save results of the current view(question) into the result array.
 	 */
-	private void saveResult(){
+	private void saveResult() throws IllegalArgumentException{
 		
 		switch(viewTypeArray[currentView - 1]){
 		case 0:
 			RadioGroup radioGroup = (RadioGroup)findViewById(R.id.mcRadioGroup);
 			resultList[currentView - 1] = new ArrayList<String>();
-			resultList[currentView - 1].add(((RadioButton)findViewById(radioGroup.getCheckedRadioButtonId())).getText());					
+			if(radioGroup.getCheckedRadioButtonId() == -1)
+				throw new IllegalArgumentException();
+			else 
+				resultList[currentView - 1].add(((RadioButton)findViewById(radioGroup.getCheckedRadioButtonId())).getText());					
 			//Toast.makeText(getApplicationContext(), (String)resultList[currentView -1].get(0), 300).show();
 			break;
 		case 1:
@@ -315,5 +359,69 @@ public class QuizActivity extends Activity {
 		default:
 			throw new IllegalArgumentException("Unknown view type");
 		}
+	}
+	
+	/**
+	 * Set a listener that will display the current chosen value for the seekBar in scalar question 
+	 */
+	private void setSeekBar(SeekBar seekBar){
+		seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				TextView text = (TextView) findViewById(R.id.scalarAnswer);
+				text.setText(Integer.toString(seekBar.getProgress()+1));
+			}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				TextView text = (TextView) findViewById(R.id.scalarAnswer);
+				text.setText(Integer.toString(seekBar.getProgress()+1));
+			}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				TextView text = (TextView) findViewById(R.id.scalarAnswer);
+				text.setText(Integer.toString(seekBar.getProgress()+1));
+			}		
+		});
+	}
+	
+	private void setNotifiAlarm(){
+		int hour, minute, notifiMinutes, currentTime;
+        
+        //Get current time
+        Time time = new Time();
+        time.setToNow();
+        hour = time.hour;
+        minute = time.minute;
+        //convert current hour and minute into minute
+        currentTime = hour * 60 + minute; 
+        
+		//Get the notification minute from shared preferences
+		SharedPreferences sp = getSharedPreferences(HealthyDroidActivity.NAMESPACE, 0);
+        notifiMinutes = sp.getInt("time", -1);
+        if(notifiMinutes == -1)
+        	throw new NoSuchElementException("Invalid or missing time value");
+        
+        //Set the alarm for notification
+		Intent intent = new Intent(this, AlarmReciever.class);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        int days = 1;
+        am.set(AlarmManager.RTC, System.currentTimeMillis() 
+        		- (currentTime + notifiMinutes)*60000 
+        		+ (days * 86400000) , pi);
+	}
+	
+	@Override
+	protected void onResume(){
+		dataSource.open();
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause(){
+		dataSource.close();
+		super.onPause();
 	}
 }

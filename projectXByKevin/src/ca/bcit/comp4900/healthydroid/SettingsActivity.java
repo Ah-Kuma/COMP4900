@@ -1,10 +1,13 @@
 package ca.bcit.comp4900.healthydroid;
 
 
+import com.michaelnovakjr.numberpicker.NumberPickerPreference;
+
 import ca.bcit.comp4900.R;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -14,17 +17,19 @@ import android.widget.Toast;
 
 /**
  * Settings menu item that allows user to set the notificationPeriod and time
- * @author Kevin
+ * @author Kevin, William
  *
  */
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
-	private static final String errorMsg = "No data";
+	private static final String ERROR_MSG = "No data";
 	
-	private static final String TIME_KEY = "time";
+	private static final String NOTIFICATIONENABLED_KEY = "notificationEnabled";
+	private static final String TIME_KEY = "notificationTime";
     private static final String NOTIFICATIONPERIOD_KEY = "notificationPeriod";
     
+    private CheckBoxPreference checkPref;
     private TimePreference timePref;
-    private DatePreference datePref;
+    private NumberPickerPreference dayPref;
     
     @Override  
     public void onCreate(Bundle bundle) {  
@@ -34,8 +39,10 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         
         
         // Get references to the preference items
+        checkPref = (CheckBoxPreference)getPreferenceScreen().findPreference(NOTIFICATIONENABLED_KEY);
         timePref = (TimePreference)getPreferenceScreen().findPreference(TIME_KEY);
-        datePref = (DatePreference) getPreferenceScreen().findPreference(NOTIFICATIONPERIOD_KEY);
+        dayPref = (NumberPickerPreference) getPreferenceScreen().findPreference(NOTIFICATIONPERIOD_KEY);
+        
         
         // Set the reset preference
         Preference button = (Preference)getPreferenceScreen().findPreference("resetButton");
@@ -60,8 +67,9 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         
         // Setup the initial values
         //timePref.setSummary(sp.getString(TIME_KEY, errorMsg));
+        checkPref.setSummary("Displays a notification a certain number of days after you take the quiz.");
         timePref.setSummary(convertMinutesToString(sp.getInt(TIME_KEY, -1)));
-        datePref.setSummary(sp.getString(NOTIFICATIONPERIOD_KEY, errorMsg));
+        dayPref.setSummary(convertDaysToString(sp.getInt(NOTIFICATIONPERIOD_KEY, -1)));
         
         // Set up a listener whenever a key changes 
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -82,7 +90,13 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
             timePref.setSummary(convertMinutesToString(sharedPreferences.getInt(TIME_KEY, -1)));
         }
         if(key.equals(NOTIFICATIONPERIOD_KEY)) {
-            datePref.setSummary(sharedPreferences.getString(NOTIFICATIONPERIOD_KEY, errorMsg));
+            dayPref.setSummary(convertDaysToString(sharedPreferences.getInt(NOTIFICATIONPERIOD_KEY, -1)));
+        }
+        
+        //Cancels any existing notification for the quiz if the Notification Enabled setting changes to false
+        if(key.equals(NOTIFICATIONENABLED_KEY)) {
+            if(sharedPreferences.getBoolean(NOTIFICATIONENABLED_KEY, false) == false)
+                SetNotification.cancelNotification();
         }
     }  
     
@@ -93,7 +107,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
      */
     private String convertMinutesToString(int initial) {
     	if(initial == -1)
-    		return errorMsg;
+    		return ERROR_MSG;
     	
     	int hours, minutes;
     	String result = "";
@@ -103,12 +117,28 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     	if(hours > 12) {
     		hours -= 12;
     		amPmThing = "PM";
-    	} else if (hours == 0) {
+    	}else if (hours == 12) {
+    	    amPmThing = "PM";
+    	}else if (hours == 0) {
     		hours = 12;
     	}
-    	result += hours + ":" + minutes + " " + amPmThing;
+    	result += hours + ":" + ((minutes < 10) ? "0" : "") + minutes + " " + amPmThing;
 		return result;
     	
+    }
+    
+    /**
+     * Converts the number of days into a string for the summary message.
+     * 
+     * @param initial number of days
+     * @return
+     */
+    private String convertDaysToString(int initial) {
+        if(initial == -1)
+            return ERROR_MSG;
+        
+        return "Notifies you " + initial +  " day" 
+            + ((initial == 1) ? "" : "s") + " after your last quiz.";
     }
 }
 	

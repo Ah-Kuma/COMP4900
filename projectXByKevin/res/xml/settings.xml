@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory
-        android:title="Time">
+        android:title="Notifications">
+        <CheckBoxPreference 
+            android:title="Enable notifications"
+            android:key="notificationEnabled"
+            android:disableDependentsState="false"/>
         <ca.bcit.comp4900.healthydroid.TimePreference 
             android:title="Time"
-            android:key="time"/>
-        <ca.bcit.comp4900.healthydroid.DatePreference
+            android:key="notificationTime"
+            android:dependency="notificationEnabled"/>
+        <com.michaelnovakjr.numberpicker.NumberPickerPreference
             android:key="notificationPeriod"
-            android:title="Notification Day"/>
+            android:title="Notification Period"
+            android:dependency="notificationEnabled" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Reset">

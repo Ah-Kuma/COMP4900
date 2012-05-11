@@ -35,6 +35,7 @@
         <activity android:name="org.achartengine.GraphicalActivity"></activity>
         <activity android:name=".healthydroid.QuizActivity"></activity>
         <activity android:name=".healthydroid.SettingsActivity"></activity>
+        <receiver android:name=".healthydroid.AlarmReciever"></receiver>
     </application>
 
 </manifest>

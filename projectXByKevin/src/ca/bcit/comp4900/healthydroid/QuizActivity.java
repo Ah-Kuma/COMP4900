@@ -387,30 +387,20 @@ public class QuizActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * If notifications are enabled, calls the class to create the alarm for notifications.
+	 */
 	private void setNotifiAlarm(){
-		int hour, minute, notifiMinutes, currentTime;
-        
-        //Get current time
-        Time time = new Time();
-        time.setToNow();
-        hour = time.hour;
-        minute = time.minute;
-        //convert current hour and minute into minute
-        currentTime = hour * 60 + minute; 
-        
-		//Get the notification minute from shared preferences
+		int notifiMinutes, notifiDays;
+		
+		//Get the notification minutes and days from shared preferences
 		SharedPreferences sp = getSharedPreferences(HealthyDroidActivity.NAMESPACE, 0);
-        notifiMinutes = sp.getInt("time", -1);
-        if(notifiMinutes == -1)
-        	throw new NoSuchElementException("Invalid or missing time value");
-        
-        //Set the alarm for notification
-		Intent intent = new Intent(this, AlarmReciever.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        int days = 1;
-        am.set(AlarmManager.RTC, System.currentTimeMillis() 
-        		- (currentTime + notifiMinutes)*60000 
-        		+ (days * 86400000) , pi);
+		if(sp.getBoolean("notificationEnabled", false)) {
+            notifiMinutes = sp.getInt("notificationTime", -1);
+            notifiDays = sp.getInt("notificationPeriod", -1);
+            
+            SetNotification.setNotifiAlarm(am, this, notifiMinutes, notifiDays);
+		}
 	}
 	
 	@Override

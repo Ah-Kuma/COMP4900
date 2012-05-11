@@ -1,9 +1,6 @@
 package ca.bcit.comp4900.healthydroid;
 
-import java.util.Scanner;
-
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
@@ -12,7 +9,7 @@ import android.widget.TimePicker;
 /**
  * Time picker dialog popup for the preferences activities.
  * 
- * @author Kevin
+ * @author Kevin, William
  *
  */
 public class TimePreference extends DialogPreference {
@@ -33,7 +30,7 @@ public class TimePreference extends DialogPreference {
         timePick = new TimePicker(getContext());
         return timePick;  
     }
-    
+     
     @Override
     protected void onBindDialogView(View v) {
         super.onBindDialogView(v);
@@ -54,10 +51,6 @@ public class TimePreference extends DialogPreference {
       }
     }
     
-    @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-      return(a.getString(index));
-    }
     
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
@@ -68,16 +61,15 @@ public class TimePreference extends DialogPreference {
             return;
     	}
         
-    	String time = getPersistedString("10:10");
-    	Scanner scan = new Scanner(time);
-    	scan.useDelimiter(":");
-    	hour = scan.nextInt();
-    	minute = scan.nextInt();
+    	int time;
+    	time = getPersistedInt(100);
+    	hour = time / 60;
+    	minute = time % 60;
     }
     
-    @Override
-    public CharSequence getSummary(){
-		return hour + ":" + minute;
-    	
-    }
+     
+    
+    
+    
+
 }

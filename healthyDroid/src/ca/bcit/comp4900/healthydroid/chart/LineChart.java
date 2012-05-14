@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 /**
  * 
  * @author Kevin, William
@@ -30,15 +31,18 @@ public class LineChart {
 	 * @param xLabel An arrayList that contains all the labels for x axis
 	 */
 	public void setXDataLabel(ArrayList<String> xLabel){
+		Log.d("tag", "setXDataLabel");
 		xDataLabel = xLabel;	
 	}
 	
 	public void setData(int x, int y){
+		Log.d("tag", "setData");
 		xData.add(x);
 		yData.add(y);
 	}
 	
 	public GraphicalView getView(Context context, int questionNum){
+		Log.d("tag", "getView");
 		TimeSeries series = new TimeSeries("Question " + Integer.toString(questionNum));
 		for(int i = 0; i < xData.size(); i++){
 			series.add(i, yData.get(i));

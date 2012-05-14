@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
 /**
  * The purpose of this class is to provide methods that interact with the database indirectly.
  * This class also manages the HealthyDroidQuizHelper.
@@ -96,7 +97,7 @@ public class QuestionDataSource
 	{
 		ContentValues values = new ContentValues();
 		values.put(HealthyDroidQuizHelper.COLUMN_QUESTION_ID, questionId);
-		values.put(HealthyDroidQuizHelper.COLUMN_QUESTION_TYPE, option);
+		values.put(HealthyDroidQuizHelper.COLUMN_OPTION, option);
 		database.insert(HealthyDroidQuizHelper.TABLE_OPTION, null, values);
 	}
 	/**
@@ -142,7 +143,8 @@ public class QuestionDataSource
 		
 		ArrayList<Integer> QuizResults = new ArrayList<Integer>();
 		LinkedHashMap<String, ArrayList<Integer>> totalResults = new LinkedHashMap<String, ArrayList<Integer>>();
-		String currDate, oldDate = null;
+		String currDate = "", oldDate = null;
+		
 		int ans;
 		
 		Cursor cursor = database.rawQuery(query, null);
@@ -152,7 +154,7 @@ public class QuestionDataSource
 			oldDate = cursor.getString(cursor.getColumnIndex(HealthyDroidQuizHelper.COLUMN_DATETIME));
 			while(!cursor.isAfterLast())
 			{
-				currDate = cursor.getString(cursor.getColumnIndex(HealthyDroidQuizHelper.COLUMN_DATETIME));
+				
 				if(!oldDate.equalsIgnoreCase(currDate))
 				{
 					totalResults.put(oldDate, QuizResults);
@@ -162,10 +164,10 @@ public class QuestionDataSource
 				
 				ans = cursor.getInt(cursor.getColumnIndex(HealthyDroidQuizHelper.COLUMN_ANSWER));
 				QuizResults.add(ans);
+				currDate = cursor.getString(cursor.getColumnIndex(HealthyDroidQuizHelper.COLUMN_DATETIME));
 				cursor.moveToNext();
 			}
 		}
-
 		return totalResults;
 	}
 	/**

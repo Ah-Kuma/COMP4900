@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -241,13 +242,16 @@ public class QuizActivity extends Activity {
 			// Save results into the database
 			for(int i = 0; i < viewTypeArray.length; i++){
 				for(int j = 0; j < resultList[i].size(); j++)
+				{
 					dataSource.storeAnswer(i + 1, questionTextArray[i], viewTypeArray[i], (Integer)resultList[i].get(j));
+				}
 			}
 			
 			//Set alarm for notification
 			setNotifiAlarm();
 
 			// Return to the main activity/screen
+			dataSource.close();
 			finish();
 			Intent intent = new Intent(this, HealthyDroidActivity.class);
 			startActivity(intent);

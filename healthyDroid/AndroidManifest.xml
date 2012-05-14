@@ -36,6 +36,8 @@
         <activity android:name=".healthydroid.QuizActivity"></activity>
         <activity android:name=".healthydroid.SettingsActivity"></activity>
         <receiver android:name=".healthydroid.AlarmReciever"></receiver>
+        <activity android:name=".healthydroid.GenerateReportActivity"></activity>
+        <activity android:name=".healthydroid.ShareReportActivity"></activity>
     </application>
 
 </manifest>

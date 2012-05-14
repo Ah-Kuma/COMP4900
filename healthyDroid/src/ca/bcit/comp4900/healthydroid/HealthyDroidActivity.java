@@ -116,6 +116,8 @@ public class HealthyDroidActivity extends Activity {
        * @param v
        */
        public void sendReportButtonOnClick(View v){  	
+    	   //Report report = new Report(this.getBaseContext());
+    	   //Intent intent = report.getLineBitMap(3);
     	   Intent intent = new Intent(this, ReportActivity.class);
     	   startActivity(intent);
        }

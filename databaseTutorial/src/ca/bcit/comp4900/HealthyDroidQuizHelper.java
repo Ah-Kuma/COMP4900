@@ -27,6 +27,16 @@ public class HealthyDroidQuizHelper extends SQLiteOpenHelper
 	private static final String DATABASE_NAME = "healthism.db";
 	private static final int DATABASE_VERSION = 1;
 	
+	/*private static HealthyDroidQuizHelper instance;
+	
+	public static synchronized HealthyDroidQuizHelper getHelper(Context context)
+	{
+        if (instance == null)
+            instance = new HealthyDroidQuizHelper(context);
+
+        return instance;
+	}*/
+	
 	/**
 	 * SQL statements for creating the 3 tables used in the database.
 	 */
@@ -42,13 +52,14 @@ public class HealthyDroidQuizHelper extends SQLiteOpenHelper
 			+ TABLE_QUESTION + "("+COLUMN_ID+"));";
 	
 	private static String CREATE_TABLE_ASSOCIATION = "create table "	
-			+ TABLE_ASSOCIATION + "( " + COLUMN_QUESTION_ID + " integer not null, "
+			+ TABLE_ASSOCIATION + "( " + COLUMN_ID + " integer primary key autoincrement, "
+			+ COLUMN_QUESTION_ID + " integer not null, "
 			+ COLUMN_ANSWER + " text not null, " + COLUMN_DATETIME + " text not null, " 
 			+ "FOREIGN KEY (" + COLUMN_QUESTION_ID + ") REFERENCES " + TABLE_QUESTION
 			+ "(" + COLUMN_ID + "), FOREIGN KEY (" + COLUMN_ANSWER + ") "
 			+ "REFERENCES "+ TABLE_ANSWER + "(" + COLUMN_ANSWER + "), " 
 			+ "FOREIGN KEY (" + COLUMN_DATETIME + ") REFERENCES " + TABLE_ANSWER
-			+ "(" + COLUMN_DATETIME + ") PRIMARY KEY (" + COLUMN_QUESTION_ID + "," + COLUMN_DATETIME + "));";
+			+ "(" + COLUMN_DATETIME + "));";
 	
 	/**
 	 * SQL statements for dropping the tables

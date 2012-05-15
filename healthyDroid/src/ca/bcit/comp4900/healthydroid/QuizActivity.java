@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import ca.bcit.comp4900.R;
 import ca.bcit.comp4900.healthydroid.chart.LineChart;
 import ca.bcit.comp4900.healthydroid.database.QuestionDataSource;
-import ca.bcit.comp4900.healthydroid.question.MCQuestion;
-import ca.bcit.comp4900.healthydroid.question.MultipleAnswerQuestion;
-import ca.bcit.comp4900.healthydroid.question.Question;
-import ca.bcit.comp4900.healthydroid.question.ScalarQuestion;
+import ca.bcit.comp4900.healthydroid.quizBuilder.HealthismQuiz;
+import ca.bcit.comp4900.healthydroid.quizBuilder.Question;
+import ca.bcit.comp4900.healthydroid.quizBuilder.Question.QuestionType;
+import ca.bcit.comp4900.healthydroid.quizBuilder.QuizFactory;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -49,7 +50,7 @@ public class QuizActivity extends Activity {
 	
 	private ArrayList<LinearLayout> viewList;
 	private ArrayList[] resultList;
-	private int [] viewTypeArray;
+	private QuestionType [] viewTypeArray;
 	private String [] questionTextArray;
 	private LinearLayout lLayout;
 	private LayoutInflater inflater;
@@ -69,34 +70,25 @@ public class QuizActivity extends Activity {
 		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		viewList = new ArrayList<LinearLayout>(0);
 
-		HealthismQuiz quiz = new HealthismQuiz();
-		quiz.addQuestion(new MCQuestion("A B C D", "Your fav letter?"));
-		quiz.addQuestion(new MCQuestion("E F G H", "Your least fav letter?"));
-		quiz.addQuestion(new MCQuestion("I J K", "Letter?"));
-		try {
-			quiz.addQuestion(new ScalarQuestion("4", "Scale"));
-			quiz.addQuestion(new MultipleAnswerQuestion("\"X\",\"Y\",\"Z\"","Question"));
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		}
-
-		ListIterator<Question> it;
-		it = quiz.getQuestions();
+		HealthismQuiz quiz = QuizFactory.build();
 		
-		viewSize = quiz.getQuizSize();
+		List<Question> questions;
+		questions = quiz.getQuestions();
+		
+		viewSize = quiz.numQuestions();
 		resultList = new ArrayList[viewSize];
-		viewTypeArray = new int [viewSize];
+		viewTypeArray = new QuestionType [viewSize];
 		questionTextArray = new String [viewSize];		
 		
 		//Load the views for the quiz and populate the database with options in every question
-		for (int i = 0; i < quiz.getQuizSize(); i++) {
-			Question q = it.next();
-			loadQuiz(q.getQuestionTypeID(), q.getQuestionText(), q.getQuestionOptions());
-			questionTextArray[i] = q.getQuestionText();
-			viewTypeArray[i] = q.getQuestionTypeID();
+		for (int i = 0; i < viewSize; i++) {
+			Question q = quiz.getQuestion(i);
+			loadQuiz(q.getType(), q.getText(), q.getOptions().iterator());
+			questionTextArray[i] = q.getText();
+			viewTypeArray[i] = q.getType();
 			
 			//Store all the options for each question into the database
-			Iterator<String> optionsIt = q.getQuestionOptions();
+			ListIterator<String> optionsIt = q.getOptions().listIterator();
 			while(optionsIt.hasNext()){
 				dataSource.storeOption(i, optionsIt.next());
 			}
@@ -131,13 +123,13 @@ public class QuizActivity extends Activity {
 	 * @param questionTextn question
 	 * @param it iterator pointing to the current question
 	 */
-	public void loadQuiz(int questionType, String questionText, Iterator<String> it) {
+	public void loadQuiz(Question.QuestionType questionType, String questionText, Iterator<String> it) {
 		LinearLayout childLayout = new LinearLayout(this.getApplicationContext());
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		lLayout = (LinearLayout) findViewById(R.id.quiz_layout);
 		
 		switch (questionType) {
-		case 0:
+		case MCQuestion:
 			TextView mcText;
 			RadioButton b;
 			RadioGroup radioGroup;
@@ -162,7 +154,7 @@ public class QuizActivity extends Activity {
 			lLayout.removeAllViews();
 			break;
 
-		case 1:
+		case ScalarQuestion:
 			SeekBar seekBar;
 			TextView scalarText;
 			
@@ -185,7 +177,7 @@ public class QuizActivity extends Activity {
 			lLayout.removeAllViews();
 			break;
 
-		case 2:
+		case MAQuestion:
 			TextView checklistText;
 			LinearLayout checkBoxView;
 			int checkBoxCount = 0;
@@ -325,7 +317,7 @@ public class QuizActivity extends Activity {
 	private void saveResult() throws IllegalArgumentException{
 		
 		switch(viewTypeArray[currentView - 1]){
-		case 0:
+		case MCQuestion:
 			RadioGroup radioGroup = (RadioGroup)findViewById(R.id.mcRadioGroup);
 			resultList[currentView - 1] = new ArrayList<Integer>();
 			if(radioGroup.getCheckedRadioButtonId() == -1)
@@ -335,13 +327,13 @@ public class QuizActivity extends Activity {
 				//resultList[currentView - 1].add(((RadioButton)findViewById(radioGroup.getCheckedRadioButtonId())).getText());					
 				//Toast.makeText(getApplicationContext(), Integer.toString((Integer)resultList[currentView -1].get(0)), 300).show();
 			break;
-		case 1:
+		case ScalarQuestion:
 			SeekBar seekBar = (SeekBar)findViewById(R.id.scalarSeekBar);
 			resultList[currentView -1] = new ArrayList<Integer>();
 			resultList[currentView -1].add(seekBar.getProgress() + 1);
 			//resultList[currentView -1].add(Integer.toString(seekBar.getProgress() + 1));
 			break;
-		case 2:
+		case MAQuestion:
 			LinearLayout checkBoxView = (LinearLayout) findViewById(R.id.ma_checkBoxView);
 			
 			resultList[currentView - 1] = new ArrayList<Integer>();

@@ -53,7 +53,7 @@ public class QuestionDataSource
 	 * @param questionText the actual question.
 	 * @param questionType the type of the question inserted.
 	 */
-	private void storeQuestion(int questionId, String questionText, int questionType)
+	private void storeQuestion(int questionId, String questionText, String questionType)
 	{
 		ContentValues values = new ContentValues();
 		Cursor cursor = database.rawQuery("SELECT * FROM " + HealthyDroidQuizHelper.TABLE_QUESTION + " WHERE " 
@@ -74,7 +74,7 @@ public class QuestionDataSource
 	 * @param questionId the question number passed in by the user and referenced from the question table.
 	 * @param answer the answer to the question.
 	 */
-	public void storeAnswer(int questionId, String questionText, int questionType, int answer)
+	public void storeAnswer(int questionId, String questionText, String questionType, int answer)
 	{
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();

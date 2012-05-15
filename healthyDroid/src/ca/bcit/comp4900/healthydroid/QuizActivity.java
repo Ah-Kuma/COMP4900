@@ -235,7 +235,7 @@ public class QuizActivity extends Activity {
 			for(int i = 0; i < viewTypeArray.length; i++){
 				for(int j = 0; j < resultList[i].size(); j++)
 				{
-					dataSource.storeAnswer(i + 1, questionTextArray[i], viewTypeArray[i], (Integer)resultList[i].get(j));
+					dataSource.storeAnswer(i + 1, questionTextArray[i], viewTypeArray[i].toString(), (Integer)resultList[i].get(j));
 				}
 			}
 			

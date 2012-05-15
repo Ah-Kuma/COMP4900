@@ -36,7 +36,7 @@ public class HealthyDroidQuizHelper extends SQLiteOpenHelper
 	private static String CREATE_TABLE_QUESTION = "create table "
 			+ TABLE_QUESTION + "( " + COLUMN_ID 
 			+ " integer primary key," + COLUMN_QUESTION + " text not null, "
-			+ COLUMN_QUESTION_TYPE + " integer not null);";
+			+ COLUMN_QUESTION_TYPE + " text not null);";
 	
 	private static String CREATE_TABLE_ANSWER = "create table "
 			+ TABLE_ANSWER + "( " + COLUMN_ID

@@ -9,6 +9,7 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/HealthyDroid/lib/achartengine-1.0.0-javadocs.zip!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/simple-xml-2.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/simple-xml-2.6.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/droidText.0.2.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

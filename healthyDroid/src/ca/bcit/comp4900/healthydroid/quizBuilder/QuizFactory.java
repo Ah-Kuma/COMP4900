@@ -5,7 +5,8 @@
 package ca.bcit.comp4900.healthydroid.quizBuilder;
 
 
-import java.io.File;
+import java.io.InputStream;
+
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
@@ -20,12 +21,6 @@ import org.simpleframework.xml.core.Persister;
  */
 public class QuizFactory
 {
-    /**
-     * String indicating where the quiz document is located. This is a default value.
-     */
-    private static final String QuizFileName = "QuizTest4.xml";
-    private static final String ResourceDir = "./resources/";
-
     /**
      * For demonstration purposes only. Each quiz file will be used separately.
      *
@@ -48,18 +43,20 @@ public class QuizFactory
      * @param fileParam the filename of the document to be read.
      * @return the quiz made from the XML document.
      */
-    public static HealthismQuiz build(String fileParam)
+    public static HealthismQuiz build(InputStream is)
     {
-        String fileName = fileParam == null ? QuizFileName : fileParam;
-
-        HealthismQuiz quiz = null;
-
+        if(is == null)
+        {
+        	throw new IllegalArgumentException("Input Stream cannot be null.");
+        }
+        
+        HealthismQuiz quiz = new HealthismQuiz();
+        
         try
         {
             Serializer serializer = new Persister();
-            File file1 = new File(ResourceDir + fileName);
             quiz = serializer.read(HealthismQuiz.class,
-                                   file1);
+                                   is);
         }
         //SimpleXML requires this.
         catch(Exception ex)

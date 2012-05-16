@@ -1,0 +1,49 @@
+<HealthismQuiz id="4">
+
+	<!--Question1-->
+	<Question type="ScalarQuestion">
+		<Options>
+			<Option>20</Option>
+		</Options>
+		<Text>How many times a day do you evacuate your bowels</Text>
+	</Question>
+	
+	<!--Question2-->
+	<Question type="MCQuestion">
+		<Options>
+			<Option>Terrible</Option>
+			<Option>Bad</Option>
+			<Option>OK</Option>
+			<Option>Good</Option>
+			<Option>Amazing</Option>
+		</Options>
+		<Text>How are you feeling</Text>	
+	</Question>
+	
+	<!--Question3-->
+	<Question type="ScalarQuestion">
+		<Options>
+			<Option>80</Option>
+		</Options>
+		<Text>How many hours do you work/study a week</Text>
+	</Question>
+	
+	<!--Question4-->
+	<Question type="ScalarQuestion">
+		<Options>
+			<Option>100</Option>
+		</Options>
+		<Text>Pick your age</Text>
+	</Question>
+	
+	<!--Question5-->
+	<Question type="MCQuestion">
+		<Options>
+			<Option>Charmander</Option>
+			<Option>Squirtle</Option>
+			<Option>Bulbasaur</Option>
+		</Options>
+		<Text>Choose a starter pokemon</Text>
+	</Question>
+	
+</HealthismQuiz>

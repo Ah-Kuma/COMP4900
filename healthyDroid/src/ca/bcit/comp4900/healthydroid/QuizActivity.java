@@ -70,7 +70,7 @@ public class QuizActivity extends Activity {
 		am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		viewList = new ArrayList<LinearLayout>(0);
 
-		HealthismQuiz quiz = QuizFactory.build();
+		HealthismQuiz quiz = QuizFactory.build(getResources().openRawResource(R.raw.quiz));
 		
 		List<Question> questions;
 		questions = quiz.getQuestions();

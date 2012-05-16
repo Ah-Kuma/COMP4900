@@ -28,29 +28,5 @@
 	        	android:id="@+id/main_sendReportButton"/>
    
 	    </RelativeLayout>
-	    
-	
-	<RelativeLayout 
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_weight="1"
-	    android:orientation="vertical"
-	    android:padding="25dp">
-	    
-	    <Button 
-	        android:layout_width="120dp"
-	        android:layout_height="120dp"
-	        android:text="Back up Report"
-	        android:layout_alignParentLeft="true"
-	        android:id="@+id/main_backupButton"/>
-	    
-	    <Button 
-	        android:layout_width="120dp"
-	        android:layout_height="120dp"
-	        android:text="Profile"
-	        android:layout_alignParentRight="true"  
-	        android:id="@+id/main_profileButton"/>
-    
-	</RelativeLayout>
 	
 </LinearLayout>

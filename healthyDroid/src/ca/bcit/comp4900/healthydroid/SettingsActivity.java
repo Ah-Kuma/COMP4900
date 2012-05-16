@@ -40,21 +40,6 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         timePref = (TimePreference)getPreferenceScreen().findPreference(TIME_KEY);
         dayPref = (NumberPickerPreference) getPreferenceScreen().findPreference(NOTIFICATIONPERIOD_KEY);
         
-        
-        // Set the reset preference
-        Preference button = (Preference)getPreferenceScreen().findPreference("resetButton");
-        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences sp = getPreferenceManager().getSharedPreferences();
-                SharedPreferences.Editor editor = sp.edit();
-                editor.clear();
-                editor.commit();
-                Toast.makeText(getApplicationContext(), "Settings reset", 600).show();
-                finish();
-                return true;
-            }
-        });
     }
     
     @Override

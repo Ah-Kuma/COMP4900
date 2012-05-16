@@ -32,7 +32,7 @@ import android.widget.Toast;
 /**
  * Activity that lets the user to select range of dates for generating a report.
  * 
- * @author Kevin, William
+ * @author Kevin, William and Rajpreet
  *
  */
 public class GenerateReportActivity extends Activity implements Runnable {

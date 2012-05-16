@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -95,6 +96,12 @@ public class SetProfileActivity extends Activity {
             dayOfMonth = datePick.getDayOfMonth();
             month = datePick.getMonth();
             year = datePick.getYear();
+            Time time = new Time();
+            time.setToNow();
+            if(year > time.year || (year == time.year && month > time.month) || (year == time.year && month == time.month && dayOfMonth > time.monthDay)){
+            	Toast.makeText(getApplicationContext(), "Please enter a valid birthdate", 300).show();
+            	return;
+            }
             saveData();
             Intent intent = new Intent(this, HealthyDroidActivity.class);
             finish();

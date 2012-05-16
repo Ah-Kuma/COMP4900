@@ -50,7 +50,10 @@ public class ProfileActivity extends PreferenceActivity implements OnSharedPrefe
             public boolean onPreferenceClick(Preference preference) {
                 SharedPreferences sp = getPreferenceManager().getSharedPreferences();
                 SharedPreferences.Editor editor = sp.edit();
-                editor.clear();
+                editor.remove(FIRST_NAME_KEY);
+                editor.remove(LAST_NAME_KEY);
+                editor.remove(GENDER_KEY);
+                editor.remove(BIRTHDATE_KEY);
                 editor.commit();
                 Toast.makeText(getApplicationContext(), "Settings reset", 600).show();
                 finish();

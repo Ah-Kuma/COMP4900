@@ -36,15 +36,6 @@ public class HealthyDroidActivity extends Activity {
     	setContentView(R.layout.main);
     	
     	checkProfile();
-    	
-    	//Call the profileButtonOnClick method when the profile button is clicked
-    	Button profileButton = (Button)findViewById(R.id.main_profileButton);
-        profileButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				profileButtonOnClick(v);		
-			}
-		});
         
         //Call the quizButtonOnClick method when the quiz button is clicked
     	Button quizButton = (Button)findViewById(R.id.main_quizButton);
@@ -64,16 +55,7 @@ public class HealthyDroidActivity extends Activity {
 			}
 		});
         
-      //Call the backupButtonOnClick method when the backup button is clicked
-    	Button backupButton = (Button)findViewById(R.id.main_backupButton);
-        backupButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				backupButtonOnClick(v);		
-			}
-		});
     }
-    
     @Override
     public void onResume(){
     	super.onResume();
@@ -92,15 +74,6 @@ public class HealthyDroidActivity extends Activity {
             startActivity(intent);
         } 
     }
-    
-    /**
-     * Change the view to the profile view after user clicks the profile button.
-     * @param v
-     */
-     public void profileButtonOnClick(View v){  	
-         Intent intent = new Intent(this, ProfileActivity.class);
-         startActivity(intent);
-     }
      
      /**
       * Change the view to the quiz view after user clicks the quiz button.
@@ -121,15 +94,6 @@ public class HealthyDroidActivity extends Activity {
     	   Intent intent = new Intent(this, ReportActivity.class);
     	   startActivity(intent);
        }
-       
-       /**
-        * Change the view to the backup view after user clicks the backup button
-        * @param v
-        */
-        public void backupButtonOnClick(View v){  	
-            Intent intent = new Intent(this, BackupActivity.class);
-            startActivity(intent);
-        }
         
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {

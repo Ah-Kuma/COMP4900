@@ -3,50 +3,52 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="1">
-    </LinearLayout>
-    
-    <LinearLayout 
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="1">
-    	
-    	<TextView
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-		    android:text="Default mc question"
-    		android:layout_gravity="center"
-    	    android:id="@+id/mc_QuestionText"/>
-    </LinearLayout>
 
-
-    <LinearLayout 
+    <ScrollView
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="2">
-    </LinearLayout>
+        android:layout_height="wrap_content" >
 
-    <LinearLayout 
-        android:layout_width="fill_parent"
-    	android:layout_height="fill_parent"
-    	android:orientation="vertical"
-    	android:padding="10dp"
-    	android:layout_weight="6">
-    	
-        <RadioGroup 
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:layout_gravity="center_horizontal"
-    		android:id="@+id/mcRadioGroup">
-		</RadioGroup>
-		
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/mc_QuestionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Default mc question" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <RadioGroup
+                    android:id="@+id/mcRadioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" >
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

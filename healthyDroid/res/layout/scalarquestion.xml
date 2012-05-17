@@ -44,6 +44,7 @@
     		android:layout_height="wrap_content"
     		android:id="@+id/scalarAnswer"
     		android:text="1"
+    		android:paddingTop="6dp"
     		android:layout_gravity="center"/>
         
 		<SeekBar

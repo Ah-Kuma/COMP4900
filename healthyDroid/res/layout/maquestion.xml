@@ -3,43 +3,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
- 
-    <LinearLayout 
+
+    <ScrollView
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="1">
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="1">
-    	
-        <TextView
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:text="Default multiple answer question"
-    		android:layout_gravity="center"
-    		android:id="@+id/maQuestionText"/>
-        
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="2">
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical"
-    	android:layout_weight="6"
-    	android:id="@+id/ma_checkBoxView">
-    	<!--  
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/maQuestionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Default multiple answer question" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ma_checkBoxView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:orientation="vertical" >
+
+                <!--
 		<CheckBox
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
@@ -73,8 +75,10 @@
 		    android:layout_height="wrap_content"
 		    android:layout_gravity="center_horizontal"
 		    android:text="CheckBox 5"
-		    android:id="@+id/ma_checkBox5"/>
-		-->
-	 </LinearLayout>
-	 
+		    android:id="@+id/ma_checkBox5"/>
+                -->
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

@@ -14,7 +14,14 @@
         <TextView 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Set Profile"/>
+            android:text="Set Profile"
+            android:padding="4dp"
+            android:textColor="@color/lgreen"
+            style="@android:style/TextAppearance.Large"/>
+        <View
+            android:layout_height="2dp"
+            android:layout_width="fill_parent"
+            android:background="@android:color/darker_gray" />
         
     </LinearLayout>
      
@@ -110,6 +117,8 @@
 	   			<DatePicker
 	        		android:layout_width="wrap_content"
 	    			android:layout_height="wrap_content"
+	    			android:spinnersShown="true"
+	    			android:calendarViewShown="false"
 	    			android:layout_gravity="center_horizontal"
 	    			android:id="@+id/setProfile_datePicker"/>"
 	    

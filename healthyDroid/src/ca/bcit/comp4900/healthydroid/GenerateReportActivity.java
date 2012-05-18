@@ -50,8 +50,7 @@ public class GenerateReportActivity extends Activity implements Runnable {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.generatereport);
-    	textTitle = (EditText) findViewById(R.id.editText0);
-        textContent = (EditText) findViewById(R.id.editText1);
+        textContent = (EditText) findViewById(R.id.generateReport_editText);
 		//Report report = new Report(this.getBaseContext());
 		//ImageView imageView = (ImageView) findViewById(R.id.generateReport_imageView);
 		//imageView.setImageBitmap(report.getLineBitMap(3));

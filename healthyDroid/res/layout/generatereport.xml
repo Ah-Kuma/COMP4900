@@ -16,27 +16,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="8"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
         <EditText
-            android:id="@+id/editText0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="title"
-            android:inputType="textMultiLine"
-            android:minLines="1" >
-
-            <requestFocus />
-        </EditText>
-
-        <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/generateReport_editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="top"
-            android:hint="content"
+            android:hint="Message to doctor/health practitioner"
             android:inputType="textMultiLine"
             android:minLines="4" />
     </LinearLayout>
@@ -48,7 +39,7 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/report_genReportButton"
+            android:id="@+id/generateReport_genReportButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

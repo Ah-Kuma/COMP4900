@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import ca.bcit.comp4900.R;
 
+/**
+ * Activity for sending the report via email
+ * @author Kevin
+ *
+ */
 public class ShareReportActivity extends Activity{
 	/** Called when the activity is first created. */
     @Override

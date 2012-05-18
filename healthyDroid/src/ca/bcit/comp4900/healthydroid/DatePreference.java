@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,6 +33,8 @@ public class DatePreference extends DialogPreference {
     @Override
     protected View onCreateDialogView() {
         datePick = new DatePicker(getContext());
+        if(Build.VERSION.SDK_INT >= 11)
+        	datePick.setCalendarViewShown(false);
         return datePick;  
     }
     

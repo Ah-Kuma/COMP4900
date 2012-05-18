@@ -9,11 +9,10 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 /**
- * Setting activity for the user profile
+ * Profile activity for the user profile
  * @author Kevin, William
  * @version 1.0
  */
@@ -30,6 +29,8 @@ public class ProfileActivity extends PreferenceActivity implements OnSharedPrefe
     private ListPreference genderPref;
     private DatePreference datePref;
     
+    private String firstName;
+    private String lastName;
     
     @Override  
     public void onCreate(Bundle bundle) {  
@@ -42,6 +43,10 @@ public class ProfileActivity extends PreferenceActivity implements OnSharedPrefe
         lastNamePref = (EditTextPreference)getPreferenceScreen().findPreference(LAST_NAME_KEY);
         genderPref = (ListPreference) getPreferenceScreen().findPreference(GENDER_KEY);
         datePref = (DatePreference) getPreferenceScreen().findPreference(BIRTHDATE_KEY);
+        
+        //Store the current name
+        firstName = firstNamePref.getText();
+        lastName = lastNamePref.getText();
         
         // Set the reset preference
         Preference button = (Preference)getPreferenceScreen().findPreference("resetButton");
@@ -91,9 +96,35 @@ public class ProfileActivity extends PreferenceActivity implements OnSharedPrefe
         // If preferences change, update the displayed preference
         if (key.equals(FIRST_NAME_KEY)) {
             firstNamePref.setSummary(sharedPreferences.getString(FIRST_NAME_KEY, errorMsg));
+            
+            //Does not allow an empty first name
+            if(firstNamePref.getSummary().equals("")){
+            	firstNamePref.setSummary(firstName);
+            	SharedPreferences prefs = getSharedPreferences(HealthyDroidActivity.NAMESPACE, 0);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("firstName", firstName);
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Please enter a non empty first name", 300).show();
+            }
+            else{
+            	firstName = (String) firstNamePref.getSummary();
+            }
         }
         if (key.equals(LAST_NAME_KEY)) {
             lastNamePref.setSummary(sharedPreferences.getString(LAST_NAME_KEY, errorMsg));
+            
+            //Does not allow an empty last name
+            if(lastNamePref.getSummary().equals("")){
+            	lastNamePref.setSummary(lastName);
+            	SharedPreferences prefs = getSharedPreferences(HealthyDroidActivity.NAMESPACE, 0);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("lastName", lastName);
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Please enter a non empty last name", 300).show();
+            }
+            else{
+            	lastName = (String) lastNamePref.getSummary();
+            }
         }
         if (key.equals(GENDER_KEY)) {
             genderPref.setSummary(sharedPreferences.getString(GENDER_KEY, errorMsg));

@@ -1,9 +1,6 @@
 package ca.bcit.comp4900.healthydroid;
 
 import ca.bcit.comp4900.R;
-import ca.bcit.comp4900.healthydroid.chart.BarChart;
-import ca.bcit.comp4900.healthydroid.chart.LineChart;
-import ca.bcit.comp4900.healthydroid.chart.PieChart;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * The main activity of the application.

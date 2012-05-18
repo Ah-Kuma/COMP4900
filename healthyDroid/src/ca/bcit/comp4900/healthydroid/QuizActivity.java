@@ -1,15 +1,9 @@
 package ca.bcit.comp4900.healthydroid;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
-import java.util.NoSuchElementException;
-
 import ca.bcit.comp4900.R;
-import ca.bcit.comp4900.healthydroid.chart.LineChart;
 import ca.bcit.comp4900.healthydroid.database.QuestionDataSource;
 import ca.bcit.comp4900.healthydroid.quizBuilder.HealthismQuiz;
 import ca.bcit.comp4900.healthydroid.quizBuilder.Question;
@@ -17,13 +11,10 @@ import ca.bcit.comp4900.healthydroid.quizBuilder.Question.QuestionType;
 import ca.bcit.comp4900.healthydroid.quizBuilder.QuizFactory;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -71,9 +62,6 @@ public class QuizActivity extends Activity {
 		viewList = new ArrayList<LinearLayout>(0);
 
 		HealthismQuiz quiz = QuizFactory.build(getResources().openRawResource(R.raw.quiz));
-		
-		List<Question> questions;
-		questions = quiz.getQuestions();
 		
 		viewSize = quiz.numQuestions();
 		resultList = new ArrayList[viewSize];
@@ -324,14 +312,11 @@ public class QuizActivity extends Activity {
 				throw new IllegalArgumentException();
 			else 
 				resultList[currentView - 1].add(radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId())));
-				//resultList[currentView - 1].add(((RadioButton)findViewById(radioGroup.getCheckedRadioButtonId())).getText());					
-				//Toast.makeText(getApplicationContext(), Integer.toString((Integer)resultList[currentView -1].get(0)), 300).show();
 			break;
 		case ScalarQuestion:
 			SeekBar seekBar = (SeekBar)findViewById(R.id.scalarSeekBar);
 			resultList[currentView -1] = new ArrayList<Integer>();
 			resultList[currentView -1].add(seekBar.getProgress() + 1);
-			//resultList[currentView -1].add(Integer.toString(seekBar.getProgress() + 1));
 			break;
 		case MAQuestion:
 			LinearLayout checkBoxView = (LinearLayout) findViewById(R.id.ma_checkBoxView);
@@ -340,7 +325,6 @@ public class QuizActivity extends Activity {
 			for(int i = 0; i < checkBoxView.getChildCount(); i++){
 				if(((CheckBox)checkBoxView.getChildAt(i)).isChecked())		
 					resultList[currentView - 1].add(i);
-					//resultList[currentView - 1].add(((CheckBox)checkBoxView.getChildAt(i)).getText());
 			}	
 			break;
 		default:

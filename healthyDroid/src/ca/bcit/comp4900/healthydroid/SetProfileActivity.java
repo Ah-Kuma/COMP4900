@@ -57,6 +57,7 @@ public class SetProfileActivity extends Activity {
         datePick = (DatePicker) findViewById(R.id.setProfile_datePicker);
         pageNumber = (TextView) findViewById(R.id.setProfile_pageNumber);
         
+        //Initialize the values
         firstName = "";
         lastName = "";
         gender = "";
@@ -83,6 +84,7 @@ public class SetProfileActivity extends Activity {
         case R.id.setProfile_view2:
             firstName = fName.getText().toString();
             lastName = lName.getText().toString();
+            //Does not allow empty name
             if(firstName.equals("") || lastName.equals("")) {
                 Toast.makeText(getApplicationContext(), "Please fill in your name", 300).show();
                 return;
@@ -96,6 +98,8 @@ public class SetProfileActivity extends Activity {
             dayOfMonth = datePick.getDayOfMonth();
             month = datePick.getMonth();
             year = datePick.getYear();
+            
+            //Does not allow a date in the future
             Time time = new Time();
             time.setToNow();
             if(year > time.year || (year == time.year && month > time.month) || (year == time.year && month == time.month && dayOfMonth > time.monthDay)){

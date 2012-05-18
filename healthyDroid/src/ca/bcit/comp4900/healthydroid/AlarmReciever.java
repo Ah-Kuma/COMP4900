@@ -30,6 +30,7 @@ public class AlarmReciever extends BroadcastReceiver{
         CharSequence tickerText = "Time to take your quiz!!!!";
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         
         //define notification's message and pending intent
         Context context = arg0.getApplicationContext();

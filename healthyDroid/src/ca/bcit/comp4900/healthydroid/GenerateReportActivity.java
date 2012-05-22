@@ -3,6 +3,9 @@ package ca.bcit.comp4900.healthydroid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -15,18 +18,21 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 import ca.bcit.comp4900.R;
+import ca.bcit.comp4900.healthydroid.database.QuestionDataSource;
+import ca.bcit.comp4900.healthydroid.quizBuilder.Question.QuestionType;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -37,13 +43,12 @@ import android.widget.Toast;
  */
 public class GenerateReportActivity extends Activity implements Runnable {
     public static final String FILE_LOCATION = "PdfAndroid";
-    public static final String FILE_NAME = "test.pdf";
-    private EditText textTitle;
+    public static final String FILE_NAME = "healthyDroidReport.pdf";
     private EditText textContent;
     private ProgressDialog pd;
-    
+    private QuestionDataSource datasource;
     private boolean errorResult;
-    private String errorMsg = "";
+    private String errorMsg = "", title, content;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -51,9 +56,8 @@ public class GenerateReportActivity extends Activity implements Runnable {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.generatereport);
         textContent = (EditText) findViewById(R.id.generateReport_editText);
-		//Report report = new Report(this.getBaseContext());
-		//ImageView imageView = (ImageView) findViewById(R.id.generateReport_imageView);
-		//imageView.setImageBitmap(report.getLineBitMap(3));
+		datasource = new QuestionDataSource(this.getBaseContext());
+        datasource.open();
     }
     
     /**
@@ -69,7 +73,7 @@ public class GenerateReportActivity extends Activity implements Runnable {
         }
   
         //show the loading animation dialog and start the thread to generate the pdf
-        pd = ProgressDialog.show(this, "PDF Creator", "Creating pdf...", true, false);
+        pd = ProgressDialog.show(this, "Report Builder", "Creating pdf...", true, false);
         Thread t = new Thread(this);
         t.start();
        
@@ -140,9 +144,8 @@ public class GenerateReportActivity extends Activity implements Runnable {
             doc.open();
 
             addFileProperties(doc);
-            addPageOneContent(doc);
-            doc.newPage();
-            addPageTwoContent(doc);
+            addUserInfo(doc);
+            addTableContent(doc);
             
             doc.close();
         } catch (DocumentException e) {
@@ -158,53 +161,137 @@ public class GenerateReportActivity extends Activity implements Runnable {
      * @param document
      */
     private void addFileProperties(Document document) {
-        document.addTitle("test pdf - title");
-        document.addSubject("test pdf - subject");
+    	title = "Healthy Droid Health Report";
+    	content = textContent.getText().toString();
+        document.addTitle(title);
+        document.addSubject(content);
         document.addKeywords("test pdf - keywords");
-        document.addAuthor("test pdf - author");
-        document.addCreator("test pdf - creator");
+        document.addAuthor("Healthism Systems Inc");
+        document.addCreator("Healthism Systems Inc");
     }
 
     /**
-     * add text content for page one. content is the user entered values.
+     * Adds the users name, birthdate and gender into the document.
      * 
      * @param doc
      * @throws DocumentException
      */
-    private void addPageOneContent(Document doc) throws DocumentException {
-        Font FontTitle = new Font(Font.TIMES_ROMAN, 28, Font.UNDERLINE);
+    private void addUserInfo(Document doc) throws DocumentException {
         Font FontContent = new Font(Font.TIMES_ROMAN, 18, Font.NORMAL);
-        
+        SharedPreferences prefs = getSharedPreferences(HealthyDroidActivity.NAMESPACE, 0);
+        String fname, lname, gender, birthdate;
         // add title
-        Paragraph p = new Paragraph(textTitle.getText().toString(), FontTitle);
+        Paragraph p = new Paragraph();
         // add empty line
-        p.add(new Paragraph(" "));
-        // add content
-        p.add(new Paragraph(textContent.getText().toString(), FontContent));
-        
+        p.add(new Paragraph(""));
+        // add headers 
+        fname = prefs.getString("firstName", null);
+        lname = prefs.getString("lastName", null);
+        gender = prefs.getString("gender", null);
+        birthdate = prefs.getString("birthdate", null);
+        // add user name, birthdate and gender
+        p.add(new Paragraph(fname + " " + lname, FontContent));
+        p.add(new Paragraph(birthdate, FontContent));
+        p.add(new Paragraph(gender, FontContent));
+        // add a blank line for formatting
+        p.add(new Paragraph(""));
+        // add a blank line for formatting
         doc.add(p);
     }
     
     /**
-     * add predefined table stuff into page two
+     * adds the questions, answers and date the questions were answered into a table and adds the table onto the pdf document.
      * 
-     * @param doc
+     * @param doc - the pdf documnent that the content is written to
      * @throws DocumentException 
      */
-    private void addPageTwoContent(Document doc) throws DocumentException {
-        PdfPTable table = new PdfPTable(2);
+    private void addTableContent(Document doc) throws DocumentException {
+    	ArrayList<Integer> questions = new ArrayList<Integer>();
+        LinkedList<String> answers = new LinkedList<String>();
+        ArrayList<String> options = new ArrayList<String>();
+        ArrayList<String> questionTypes = new ArrayList<String>();
+    	PdfPTable table = new PdfPTable(4);
         
-        PdfPCell c1 = new PdfPCell(new Phrase("header 1"));
-        PdfPCell c2 = new PdfPCell(new Phrase("header 2"));
-        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        c2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        PdfPCell questionNumber = new PdfPCell(new Phrase("Question Number"));
+        PdfPCell questionText = new PdfPCell(new Phrase("Question"));
+        PdfPCell answer = new PdfPCell(new Phrase("Answer"));
+        PdfPCell date = new PdfPCell(new Phrase("Date Answered"));
         
-        table.addCell(c1);
-        table.addCell(c2);
-        for(int i = 0; i < 10; i++) {
-            table.addCell(Integer.toString(i));
+        questionNumber.setHorizontalAlignment(Element.ALIGN_CENTER);
+        questionText.setHorizontalAlignment(Element.ALIGN_CENTER);
+        answer.setHorizontalAlignment(Element.ALIGN_CENTER);
+        date.setHorizontalAlignment(Element.ALIGN_CENTER);
+        
+        table.addCell(questionNumber);
+        table.addCell(questionText);
+        table.addCell(answer);
+        table.addCell(date);
+        
+        questions = datasource.getQuestions();
+        answers = datasource.getAnswer();
+        questionTypes = datasource.getQuestionTypes();
+        
+        int qNum;
+        Log.d("questions", Integer.toString(questions.size()));
+        Log.d("answers", Integer.toString(answers.size()));
+
+        Iterator<String> answersIterator = answers.iterator();
+        while(answersIterator.hasNext())
+        {
+        	for(int j=0; j<questions.size(); j++)
+        	{
+        		qNum = questions.get(j);
+        		//Add the question number to the table
+        		table.addCell(Integer.toString(qNum));
+
+        		if((questionTypes.get((qNum-1)).equals(QuestionType.valueOf("ScalarQuestion").toString())))
+        		{
+        			options = datasource.getOptions(qNum-1);
+        			String text = datasource.getQuestionText(qNum);
+        			String range = options.get(0);
+        			//Add question text
+        			table.addCell(text + " (on a scale of 1 to " + range + ")");
+        			//Add question answer
+        			Log.d("stuff",answers.toString());
+        			table.addCell(answersIterator.next());
+        		}
+        		else
+        		{
+        			options = datasource.getOptions(qNum-1);
+        			String text = datasource.getQuestionText(qNum);
+            		//Add question text
+        			table.addCell(text);
+            		//Add answer
+        			table.addCell(options.get(Integer.parseInt(answersIterator.next())));
+        		}
+        		//Add date
+        		table.addCell(answersIterator.next());
+        	}
         }
-        
+        //Add a blank line for formatting
+        Paragraph p = new Paragraph("");
+        //Add the user's message to the document
+        p.add(new Paragraph(content));
+        //Append everything into the document
         doc.add(table);
+        doc.add(p);
     }
+    /**
+     * Overwritten method for when the activity is restarted after pausing.
+     */
+    @Override
+	protected void onResume()
+    {
+		datasource.open();
+		super.onResume();
+	}
+	/**
+	 * Overwritten method to close the database when the activity is left abruptly (ie the home button is pressed).
+	 */
+	@Override
+	protected void onPause()
+	{
+		datasource.close();
+		super.onPause();
+	}
 }

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="ThemeSelector" parent="android:Theme.Black" />
-    <style name="ThemeSelectorNoBar" parent="android:Theme.Black" />
-</resources>

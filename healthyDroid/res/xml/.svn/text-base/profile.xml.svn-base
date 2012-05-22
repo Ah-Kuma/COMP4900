@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:title="Name">
+        <EditTextPreference 
+            android:title="First name"
+            android:key="firstName"/>
+        <EditTextPreference 
+            android:title="Last name"
+            android:key="lastName"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Personal information">
+        <ListPreference 
+            android:key="gender"
+            android:title="Gender"
+            android:entries="@array/setProfile_genderArray"
+            android:entryValues="@array/setProfile_genderArray"/>
+        <ca.bcit.comp4900.healthydroid.DatePreference
+            android:key="brithdate"
+            android:title="Brithday"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Reset">
+        <Preference
+            android:title="Reset profile"
+            android:key="resetButton"
+            android:summary="Clears all the information stored in your profile."/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, HealthyDroidActivity!</string>
+    <string name="app_name">HealthyDroid</string>
+    <string name="setProfile_message">Welcome to the HealthyDroid application for the X disease.\n\n In this application, you are going to complete a quiz that provided by your doctor/health practitioner every once a while.\n You are able to generate and send a health report that populated by the results of the quizzes to your doctor/health practitioner.</string>
+    <string-array name="setProfile_genderArray">
+        <item >Male</item>
+        <item >Female</item>
+    </string-array>
+
+</resources>
